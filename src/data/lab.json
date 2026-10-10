@@ -1,0 +1,10 @@
+[
+  { "name": "브라우저 속 언어 모델 (Gemma)", "url": "https://ag-firebase-board-2026.web.app/browser/44-local-gemma", "desc": "구글 Gemma를 내 PC의 그래픽카드로 브라우저 안에서 돌립니다. 모델 파일은 직접 받아서 고릅니다." },
+  { "name": "브라우저 속 언어 모델 (WebLLM)", "url": "https://ag-firebase-board-2026.web.app/browser/57-webllm", "desc": "작은 언어 모델을 한 번 내려받아 브라우저에서 대화합니다. WebGPU가 되는 최신 크롬·엣지가 필요합니다." },
+  { "name": "크롬에 내장된 AI", "url": "https://ag-firebase-board-2026.web.app/browser/58-chrome-builtin-ai", "desc": "데스크톱 크롬에 들어 있는 모델로 API 키 없이 질문, 요약, 번역을 해 봅니다." },
+  { "name": "인터넷 없는 받아쓰기", "url": "https://ag-firebase-board-2026.web.app/browser/55-whisper", "desc": "녹음이나 음성 파일을 Whisper 모델이 글자로 바꿉니다. 자막(SRT) 파일로 저장할 수 있습니다." },
+  { "name": "인터넷 없는 읽어주기", "url": "https://ag-firebase-board-2026.web.app/browser/56-kokoro-tts", "desc": "음성 합성 모델을 브라우저에서 돌려 목소리 파일을 만듭니다. 현재는 영어 목소리 위주입니다." },
+  { "name": "부서 문서 검색기", "url": "https://ag-firebase-board-2026.web.app/browser/53-doc-search", "desc": "hwpx·docx·txt 문서를 넣으면 브라우저 안에 색인을 만들고, 임베딩 모델로 뜻이 비슷한 문단까지 찾습니다." },
+  { "name": "사진 속 글자 읽기", "url": "https://ag-firebase-board-2026.web.app/browser/54-ocr", "desc": "사진이나 스캔 이미지 속 한글과 영어를 글자로 바꿉니다." },
+  { "name": "글을 알아보는 AI 3종", "url": "https://ag-firebase-board-2026.web.app/browser/42-text-ai", "desc": "언어 감지, 감정 분류, 뜻이 비슷한 문장 찾기를 한 화면에서 해 봅니다." }
+]

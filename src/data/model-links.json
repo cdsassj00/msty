@@ -1,0 +1,423 @@
+[
+  {
+    "group": "모델 찾기와 받기",
+    "name": "Ollama 라이브러리",
+    "url": "https://ollama.com/library",
+    "desc": "Ollama로 바로 받을 수 있는 모델 목록. Msty에서도 같은 이름으로 받는다",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "Ollama 검색",
+    "url": "https://ollama.com/search",
+    "desc": "이름·용도로 모델 검색",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "Ollama 임베딩 모델",
+    "url": "https://ollama.com/search?c=embedding",
+    "desc": "임베딩 전용 모델만 모아 보기",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "Hugging Face GGUF 모델",
+    "url": "https://huggingface.co/models?library=gguf&sort=trending",
+    "desc": "로컬 실행용 GGUF 파일을 인기순으로 보기",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "Hugging Face 한국어 GGUF",
+    "url": "https://huggingface.co/models?pipeline_tag=text-generation&library=gguf&language=ko&sort=trending",
+    "desc": "한국어 태그가 붙은 GGUF 모델",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "LM Studio 모델 카탈로그",
+    "url": "https://lmstudio.ai/models",
+    "desc": "LM Studio가 고른 모델 목록과 크기",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "MLX 커뮤니티",
+    "url": "https://huggingface.co/mlx-community",
+    "desc": "Apple Silicon용 MLX 변환 모델 모음",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "Unsloth 모델 카탈로그",
+    "url": "https://unsloth.ai/docs/get-started/unsloth-model-catalog",
+    "desc": "Unsloth가 양자화해 올린 모델 목록",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "LLM Explorer (소형 모델)",
+    "url": "https://llm-explorer.com/list/?small",
+    "desc": "오픈 모델을 크기·라이선스·점수로 걸러 보는 목록",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "Gemma 공식 페이지",
+    "url": "https://deepmind.google/models/gemma/",
+    "desc": "구글 Gemma 계열 소개",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "EmbeddingGemma (Ollama)",
+    "url": "https://ollama.com/library/embeddinggemma",
+    "desc": "구글의 소형 임베딩 모델 받기",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "모델 찾기와 받기",
+    "name": "EmbeddingGemma 소개 글",
+    "url": "https://huggingface.co/blog/embeddinggemma",
+    "desc": "Hugging Face의 EmbeddingGemma 설명",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "전체 모델 목록과 출시 흐름",
+    "name": "LifeArchitect 모델 표",
+    "url": "https://lifearchitect.ai/models-table/",
+    "desc": "공개된 LLM을 출시일·크기·개발사로 정리한 큰 표",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "전체 모델 목록과 출시 흐름",
+    "name": "models.dev",
+    "url": "https://models.dev/",
+    "desc": "모델별 가격·컨텍스트 길이·기능을 모은 공개 데이터베이스",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "전체 모델 목록과 출시 흐름",
+    "name": "LLM Stats",
+    "url": "https://llm-stats.com/",
+    "desc": "모델 사양과 벤치마크 점수 비교",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "전체 모델 목록과 출시 흐름",
+    "name": "OpenRouter 모델 목록",
+    "url": "https://openrouter.ai/models",
+    "desc": "클라우드로 제공되는 모델 목록. 오픈 모델도 포함",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "전체 모델 목록과 출시 흐름",
+    "name": "OpenRouter 사용량 순위",
+    "url": "https://openrouter.ai/rankings",
+    "desc": "실제로 많이 불리는 모델 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "Artificial Analysis 오픈 모델",
+    "url": "https://artificialanalysis.ai/models/open-source",
+    "desc": "오픈 웨이트 모델의 품질·속도·가격 비교",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "LMArena",
+    "url": "https://arena.ai/leaderboard",
+    "desc": "사람이 두 답을 비교해 투표한 결과로 매긴 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "LiveBench",
+    "url": "https://livebench.ai/",
+    "desc": "문제를 주기적으로 바꿔 암기 효과를 줄인 벤치마크",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "Open LLM Leaderboard",
+    "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard",
+    "desc": "Hugging Face의 오픈 모델 리더보드",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "Vellum 오픈 LLM 리더보드",
+    "url": "https://www.vellum.ai/open-llm-leaderboard",
+    "desc": "오픈 모델만 모은 벤치마크 표",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "BenchLM",
+    "url": "https://benchlm.ai/",
+    "desc": "여러 벤치마크를 종합·코딩·에이전트로 나눠 보기",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "Epoch AI 벤치마크",
+    "url": "https://epoch.ai/benchmarks",
+    "desc": "주요 벤치마크의 모델별 점수와 추이",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "Scale 리더보드",
+    "url": "https://labs.scale.com/leaderboard",
+    "desc": "Scale AI가 비공개 문제로 평가한 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "Kaggle 벤치마크",
+    "url": "https://www.kaggle.com/benchmarks",
+    "desc": "Kaggle이 모아 둔 벤치마크와 결과",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "OpenCompass",
+    "url": "https://rank.opencompass.org.cn/home",
+    "desc": "중국권 모델까지 넓게 다루는 평가 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "Dubesor 벤치 표",
+    "url": "https://dubesor.de/benchtable",
+    "desc": "개인이 직접 돌린 로컬·클라우드 모델 비교 표",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "성능 리더보드",
+    "name": "GPU Poor LLM Arena",
+    "url": "https://huggingface.co/spaces/k-mktr/gpu-poor-llm-arena",
+    "desc": "작은 모델끼리 겨루는 투표형 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "한국어 성능",
+    "name": "호랑이 리더보드",
+    "url": "https://horangi.ai/",
+    "desc": "W&B Korea의 한국어 LLM 리더보드. 현재 4판 보고서로 연결된다",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "한국어 성능",
+    "name": "Open Ko-LLM 리더보드",
+    "url": "https://huggingface.co/spaces/upstage/open-ko-llm-leaderboard",
+    "desc": "업스테이지·NIA의 한국어 리더보드",
+    "checked": "2026-10-10",
+    "note": "2026-10-10 기준 실행 오류 상태"
+  },
+  {
+    "group": "용도별 리더보드",
+    "name": "MTEB 리더보드",
+    "url": "https://huggingface.co/spaces/mteb/leaderboard",
+    "desc": "임베딩 모델의 검색·분류 성능 순위. 다국어 탭이 있다",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "용도별 리더보드",
+    "name": "Aider 리더보드",
+    "url": "https://aider.chat/docs/leaderboards/",
+    "desc": "코드 수정 과제로 본 모델 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "용도별 리더보드",
+    "name": "SWE-bench",
+    "url": "https://www.swebench.com/",
+    "desc": "실제 저장소 이슈 해결 능력 평가",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "용도별 리더보드",
+    "name": "Hume VoiceEQ 벤치마크",
+    "url": "https://www.hume.ai/benchmark",
+    "desc": "음성 AI가 말투·화자·배경을 얼마나 잘 다루는지 평가 (TTS, 음성 대 음성 등)",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "용도별 리더보드",
+    "name": "TTS Arena V2",
+    "url": "https://huggingface.co/spaces/TTS-AGI/TTS-Arena-V2",
+    "desc": "음성 합성 모델 투표형 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "용도별 리더보드",
+    "name": "Open ASR 리더보드",
+    "url": "https://huggingface.co/spaces/hf-audio/open_asr_leaderboard",
+    "desc": "음성 인식 모델의 정확도·속도 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "용도별 리더보드",
+    "name": "Open VLM 리더보드",
+    "url": "https://huggingface.co/spaces/opencompass/open_vlm_leaderboard",
+    "desc": "이미지를 읽는 모델의 평가 순위",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 PC에서 돌아가는지 확인",
+    "name": "CanIRun.ai",
+    "url": "https://www.canirun.ai/",
+    "desc": "내 GPU나 Mac을 감지해 돌릴 수 있는 모델을 추려 준다",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 PC에서 돌아가는지 확인",
+    "name": "What Models?",
+    "url": "https://whatmodelscanirun.com/",
+    "desc": "GPU를 고르면 VRAM·컨텍스트·속도 기준으로 가능한 모델을 보여 준다",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 PC에서 돌아가는지 확인",
+    "name": "Can it run LLM",
+    "url": "https://huggingface.co/spaces/Vokturz/can-it-run-llm",
+    "desc": "모델과 GPU를 넣으면 실행 가능 여부를 알려 준다",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 PC에서 돌아가는지 확인",
+    "name": "APXML VRAM 계산기",
+    "url": "https://apxml.com/tools/vram-calculator",
+    "desc": "모델·양자화·컨텍스트 길이로 필요한 VRAM 계산",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 PC에서 돌아가는지 확인",
+    "name": "LLM VRAM 계산기",
+    "url": "https://huggingface.co/spaces/NyxKrage/LLM-Model-VRAM-Calculator",
+    "desc": "Hugging Face 모델 주소로 VRAM 사용량 계산",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 PC에서 돌아가는지 확인",
+    "name": "LLM 하드웨어 체커",
+    "url": "https://mustafa.net/llm-hardware-checker/",
+    "desc": "GPU와 RAM을 고르면 맞는 모델 크기를 추정. 커뮤니티 수치 기반이라 어림값",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 장비에서 얼마나 빠른지",
+    "name": "LocalScore",
+    "url": "https://www.localscore.ai/",
+    "desc": "사용자들이 올린 장비별 로컬 LLM 속도 점수",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 장비에서 얼마나 빠른지",
+    "name": "GPU별 LLM 추론 벤치마크",
+    "url": "https://github.com/XiongjieDai/GPU-Benchmarks-on-LLM-Inference",
+    "desc": "NVIDIA GPU와 Apple Silicon의 초당 토큰 수 측정 모음",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 장비에서 얼마나 빠른지",
+    "name": "llama.cpp Apple Silicon 성능",
+    "url": "https://github.com/ggml-org/llama.cpp/discussions/4167",
+    "desc": "M 시리즈 칩별 llama.cpp 속도 기록",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "내 장비에서 얼마나 빠른지",
+    "name": "초당 토큰 수 표",
+    "url": "https://mustafa.net/llm-tokens-per-second-benchmarks/",
+    "desc": "GPU와 모델 크기별 속도 표. 출처가 커뮤니티 수치라 어림값",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "실행 도구",
+    "name": "Msty",
+    "url": "https://msty.ai/",
+    "desc": "로컬과 온라인 모델을 한 화면에서 쓰는 데스크톱 앱",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "실행 도구",
+    "name": "Ollama",
+    "url": "https://github.com/ollama/ollama",
+    "desc": "명령 한 줄로 모델을 받아 실행하는 런타임",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "실행 도구",
+    "name": "LM Studio",
+    "url": "https://lmstudio.ai/",
+    "desc": "모델 검색과 채팅을 묶은 데스크톱 앱",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "실행 도구",
+    "name": "Jan",
+    "url": "https://www.jan.ai/",
+    "desc": "오픈소스 로컬 채팅 앱",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "실행 도구",
+    "name": "Open WebUI",
+    "url": "https://github.com/open-webui/open-webui",
+    "desc": "Ollama에 붙여 쓰는 웹 화면",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "실행 도구",
+    "name": "llama.cpp",
+    "url": "https://github.com/ggml-org/llama.cpp",
+    "desc": "대부분의 로컬 도구가 기반으로 쓰는 추론 엔진",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "소식과 커뮤니티",
+    "name": "r/LocalLLaMA",
+    "url": "https://www.reddit.com/r/LocalLLaMA/",
+    "desc": "로컬 모델 소식이 가장 빨리 올라오는 영어 커뮤니티",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "소식과 커뮤니티",
+    "name": "Simon Willison 로컬 LLM 글",
+    "url": "https://simonwillison.net/tags/local-llms/",
+    "desc": "새 모델을 직접 돌려 본 기록",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "소식과 커뮤니티",
+    "name": "Ollama 블로그",
+    "url": "https://ollama.com/blog",
+    "desc": "Ollama 새 기능과 지원 모델 소식",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "소식과 커뮤니티",
+    "name": "Hugging Face 블로그",
+    "url": "https://huggingface.co/blog",
+    "desc": "새 모델과 도구 발표",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "소식과 커뮤니티",
+    "name": "GeekNews",
+    "url": "https://news.hada.io/",
+    "desc": "한국어 기술 뉴스 모음",
+    "checked": "2026-10-10"
+  },
+  {
+    "group": "소식과 커뮤니티",
+    "name": "파이토치 한국 사용자 모임",
+    "url": "https://discuss.pytorch.kr/",
+    "desc": "한국어 AI 소식과 토론",
+    "checked": "2026-10-10"
+  }
+]

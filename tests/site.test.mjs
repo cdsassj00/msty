@@ -64,3 +64,16 @@ test('외부 링크는 새 탭과 noopener로 연다', () => {
     }
   }
 });
+
+test('모델 찾기 페이지에 링크 50개 이상과 9개 묶음이 있다', () => {
+  const html = read('models/index.html');
+  const links = new Set([...html.matchAll(/<a\b[^>]*class="[^"]*model-link[^"]*"[^>]*href="(https:\/\/[^"]+)"/g)].map((m) => m[1]));
+  assert.ok(links.size >= 50, `links: ${links.size}`);
+  assert.equal([...html.matchAll(/<h2 [^>]*id="g\d+"/g)].length, 9);
+  for (const u of ['https://lifearchitect.ai/models-table/', 'https://llm-explorer.com/list/?small', 'https://www.hume.ai/benchmark']) assert.ok(links.has(u), u);
+});
+
+test('실습 페이지에 데모 카드 8개가 있다', () => {
+  const html = read('lab/index.html');
+  assert.equal([...html.matchAll(/href="https:\/\/ag-firebase-board-2026\.web\.app\/browser\/\d\d-[a-z-]+"/g)].length, 8);
+});
