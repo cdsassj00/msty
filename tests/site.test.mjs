@@ -39,7 +39,7 @@ test('글 목록과 상세가 빌드된다', () => {
   for (const c of ['guide', 'learn', 'news']) assert.ok(existsSync(join(DIST, c, 'index.html')), c);
   assert.ok(existsSync(join(DIST, 'news', 'site-renewal', 'index.html')));
   assert.match(read('news/index.html'), /href="\/news\/site-renewal\/"/);
-  assert.match(read('index.html'), /href="\/news\/site-renewal\/"/);
+  assert.equal([...read('index.html').matchAll(/<a class="panel card" href="\/(guide|learn|news)\/[a-z0-9-]+\/"/g)].length, 6);
 });
 
 test('다운로드 페이지는 공식 사이트로만 보낸다', () => {
@@ -90,4 +90,19 @@ test('피드가 유효하다', () => {
   assert.match(rss, /<rss[^>]*version="2\.0"/);
   assert.equal([...rss.matchAll(/<item>/g)].length, feed.items.length);
   assert.ok(existsSync(join(DIST, 'sitemap-index.xml')));
+});
+
+test('MVP 글 7편이 있고 내부 링크가 깨지지 않는다', () => {
+  const ids = ['guide/what-is-msty', 'guide/install-windows', 'guide/install-mac', 'guide/first-run-and-models', 'guide/connect-ollama', 'learn/ollama-first-steps', 'learn/choose-model-for-your-pc'];
+  for (const id of ids) {
+    const html = read(`${id}/index.html`);
+    assert.match(html, /참고한 문서/, id);
+  }
+  for (const f of htmlFiles()) {
+    for (const [, href] of readFileSync(f, 'utf8').matchAll(/href="(\/[^"#?]*)/g)) {
+      if (/\.(css|js|svg|xml|json|png|jpg|webp)$/.test(href)) continue;
+      const target = href.endsWith('/') ? join(DIST, href, 'index.html') : join(DIST, href);
+      assert.ok(existsSync(target) || existsSync(join(DIST, href, 'index.html')), `${f} -> ${href}`);
+    }
+  }
 });
