@@ -9,7 +9,8 @@
     "test": "npm run build && node --test tests/site.test.mjs",
     "test:fixtures": "node --test tests/fixtures.test.mjs",
     "check:links": "node scripts/check-links.mjs",
-    "deploy": "npm test && npm run check:links && wrangler deploy"
+    "test:e2e": "playwright test",
+    "deploy": "npm test && npm run test:e2e && npm run check:links && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
@@ -17,6 +18,7 @@
     "astro": "^7.3.8"
   },
   "devDependencies": {
+    "@playwright/test": "^1.64.0",
     "wrangler": "^4.149.0"
   }
 }

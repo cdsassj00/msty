@@ -125,12 +125,13 @@ test('연락처는 sjshin@cdsa.kr만 쓴다', () => {
   }
 });
 
-test('라이트가 기본 테마이고 다크로 바꿀 수 있다', () => {
-  const html = read('index.html');
-  assert.doesNotMatch(html, /<html[^>]*data-theme=/);
-  assert.match(html, /:root\{[^}]*--paper:#fff/);
-  assert.match(html, /\[data-theme=dark\]\{[^}]*--paper:#000/);
-  assert.match(html, /<button[^>]*id="theme-toggle"/);
+test('밝은 화면 하나만 쓴다 (테마 전환 없음)', () => {
+  for (const f of htmlFiles()) {
+    const html = readFileSync(f, 'utf8');
+    assert.doesNotMatch(html, /<html[^>]*data-theme=/, f);
+    assert.ok(!html.includes('theme-toggle"'), f);
+    assert.ok(!html.includes("localStorage.getItem('theme')"), f);
+  }
 });
 
 test('홈과 가이드가 제품 상태를 같게 적는다', () => {

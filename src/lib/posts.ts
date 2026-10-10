@@ -12,14 +12,14 @@ export const LABELS: Record<CollectionName, { title: string; lead: string }> = {
 
 // 묶음(가이드의 section, 학습의 series)마다 쓰는 색. theme.css의 .c-* 클래스와 짝이다.
 export const GROUP_COLORS: Record<string, string> = {
-  '시작하기': 'blue', 'Msty 제품과 요금': 'purple', '모델 관리': 'teal', '대화': 'green', '에이전트와 스튜디오': 'orange',
+  '시작하기': 'blue', 'Msty 제품과 요금': 'purple', 'Msty Go': 'green', 'Msty Nexus': 'purple', '모델 관리': 'teal', '대화': 'green', '에이전트와 스튜디오': 'orange',
   'Knowledge Stacks': 'pink', '도구와 부가 기능': 'purple', '워크스페이스와 설정': 'teal', '기업과 팀': 'blue',
   '로컬 AI 기초': 'blue', 'Ollama 실전': 'green', 'RAG와 임베딩': 'purple', '폐쇄망·공공기관 활용': 'teal', '만들어 보기': 'orange',
 };
 
 // 묶음마다 쓰는 아이콘. Icon.astro의 이름과 짝이다.
 export const GROUP_ICONS: Record<string, string> = {
-  '시작하기': 'play', 'Msty 제품과 요금': 'layers', '모델 관리': 'cube', '대화': 'chat', '에이전트와 스튜디오': 'bolt',
+  '시작하기': 'play', 'Msty 제품과 요금': 'layers', 'Msty Go': 'target', 'Msty Nexus': 'gate', '모델 관리': 'cube', '대화': 'chat', '에이전트와 스튜디오': 'bolt',
   'Knowledge Stacks': 'book', '도구와 부가 기능': 'wand', '워크스페이스와 설정': 'gate', '기업과 팀': 'users',
   '로컬 AI 기초': 'cube', 'Ollama 실전': 'terminal', 'RAG와 임베딩': 'search', '폐쇄망·공공기관 활용': 'building', '만들어 보기': 'hammer',
 };

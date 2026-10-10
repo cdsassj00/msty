@@ -98,7 +98,7 @@ const faqs = [
 ---
 <Base title={SITE.name}>
   <nav class="dots" aria-label="홈 구역">
-    {[['top', '처음'], ['why', '로컬 AI'], ['products', '제품'], ['features', '기능'], ['start', '시작'], ['learn', '학습'], ['lab', '실습'], ['faq', '질문']].map(([id, name]) => <a href={`#${id}`} data-dot={id}>{name}</a>)}
+    {[['top', '처음'], ['why', '로컬 AI'], ['promise', '핵심'], ['products', '제품'], ['features', '기능'], ['start', '시작'], ['learn', '학습'], ['lab', '실습'], ['faq', '질문']].map(([id, name]) => <a href={`#${id}`} data-dot={id}>{name}</a>)}
   </nav>
   <section class="hero" id="top">
     <div class="hero-glow" aria-hidden="true"></div>
@@ -151,23 +151,31 @@ const faqs = [
 
   <section class="section" id="why">
     <div class="wrap">
-      <p class="eyebrow">로컬 우선 AI</p>
-      <h2 class="h-judge" data-reveal>모델을 <mark>내 컴퓨터에 받아서</mark> 씁니다</h2>
-      <p class="lead" data-reveal>AI 모델을 회사 밖 서버가 아니라 내 PC에서 실행하는 방식입니다. 온라인 서비스보다 답의 수준은 낮을 수 있지만, 자료를 밖으로 보내지 않아도 됩니다.</p>
-      <div class="flow" data-reveal style="margin:0 0 36px" aria-hidden="true">
-        <span class="flow-node">질문과 문서</span>
-        <span class="flow-line"><i></i></span>
-        <span class="flow-node flow-core"><Icon name="lock" size={16} /> 내 PC의 모델</span>
-        <span class="flow-line"><i></i></span>
-        <span class="flow-node">답</span>
-        <span class="flow-out">외부 서버로 나가지 않음</span>
+      <div class="split">
+        <div>
+          <p class="eyebrow">로컬 우선 AI</p>
+          <h2 class="h-judge" data-reveal>모델을 <mark>내 컴퓨터에</mark> 받아서 씁니다</h2>
+        </div>
+        <div data-reveal>
+          <p class="lead">AI 모델을 회사 밖 서버가 아니라 내 PC에서 실행하는 방식입니다. 온라인 서비스보다 답의 수준은 낮을 수 있지만, 자료를 밖으로 보내지 않아도 됩니다.</p>
+          <ul class="tags"><li>사내 문서</li><li>개인정보</li><li>폐쇄망</li><li>반복 업무</li></ul>
+        </div>
       </div>
       <div class="grid three" data-stagger>
-        {reasons.map((r) => (
-          <div class={`panel card tint c-${r.c}`}><span class="ico"><Icon name={r.icon} /></span><h3>{r.title}</h3><p>{r.body}</p></div>
+        {reasons.map((r, i) => (
+          <div class="panel card reason"><span class="big-n tabular">0{i + 1}</span><h3>{r.title}</h3><p>{r.body}</p></div>
         ))}
       </div>
       <p class="more"><a class="btn-link" href="/learn/why-run-ai-locally/">로컬에서 돌리는 이유와 한계</a><a class="btn-link" href="/learn/local-or-online-per-task/">작업별로 로컬과 온라인 고르기</a></p>
+    </div>
+  </section>
+
+  <section class="statement" id="promise">
+    <canvas class="sphere" aria-hidden="true"></canvas>
+    <div class="wrap">
+      <p class="eyebrow">핵심</p>
+      <h2 data-reveal>자료는 내 PC<br />밖으로 나가지<br />않습니다.</h2>
+      <p class="lead" data-reveal>로컬 모델과의 대화는 내 컴퓨터 안에서 처리됩니다. 온라인 모델을 연결한 대화만 그 업체로 전송됩니다.</p>
     </div>
   </section>
 
@@ -221,7 +229,7 @@ const faqs = [
       <ol class="steps" data-stagger>
         {steps.map((s) => (
           <li class="panel card">
-            <span class="step-n tabular">{s.n}</span>
+            <span class="big-n tabular">0{s.n}</span>
             <h3>{s.title}</h3>
             <p>{s.body}</p>
             <a class="btn-link" href={s.href}>{s.cta} →</a>
@@ -328,10 +336,41 @@ const faqs = [
       let current = items[0];
       for (const it of items) if (it.el.getBoundingClientRect().top <= mid) current = it;
       for (const it of items) it.a.classList.toggle('on', it === current);
-      nav.classList.toggle('invert', current.el.classList.contains('dark'));
+      nav.classList.toggle('invert', current.el.classList.contains('dark') || current.el.classList.contains('statement'));
     };
     addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
     update();
+  })();
+  // 약속 구역의 점으로 이루어진 구. 화면에 보일 때만 그리고, 모션 줄이기 설정이면 한 번만 그린다.
+  (() => {
+    const cv = document.querySelector('.sphere');
+    if (!cv) return;
+    const ctx = cv.getContext('2d');
+    const N = 900, pts = [];
+    for (let i = 0; i < N; i++) { const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), t = i * 2.399963; pts.push([Math.cos(t) * r, y, Math.sin(t) * r]); }
+    let w = 0, h = 0, angle = 0, visible = false, raf = 0;
+    const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const size = () => { const b = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); w = b.width; h = b.height; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
+    const draw = () => {
+      ctx.clearRect(0, 0, w, h);
+      const R = Math.min(w, h) * 0.42, cx = w / 2, cy = h / 2, ca = Math.cos(angle), sa = Math.sin(angle), cb = Math.cos(0.35), sb = Math.sin(0.35);
+      for (const [x, y, z] of pts) {
+        const x1 = x * ca + z * sa, z1 = z * ca - x * sa, y1 = y * cb - z1 * sb, z2 = z1 * cb + y * sb;
+        const k = (z2 + 1.6) / 2.6;
+        ctx.globalAlpha = 0.18 + k * 0.82;
+        ctx.fillStyle = '#fff';
+        ctx.beginPath(); ctx.arc(cx + x1 * R, cy + y1 * R, 0.6 + k * 1.5, 0, 6.2832); ctx.fill();
+      }
+    };
+    const loop = () => { angle += 0.0032; draw(); if (visible && !still) raf = requestAnimationFrame(loop); };
+    const check = () => {
+      const b = cv.getBoundingClientRect(), now = b.bottom > 0 && b.top < innerHeight;
+      if (now && !visible) { visible = true; cancelAnimationFrame(raf); loop(); }
+      if (!now) visible = false;
+    };
+    size(); draw(); check();
+    addEventListener('resize', () => { size(); draw(); }, { passive: true });
+    addEventListener('scroll', check, { passive: true });
   })();
   // 숫자 카운트업. 모션 줄이기 설정이면 실행하지 않는다.
   (() => {

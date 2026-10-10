@@ -361,3 +361,48 @@ a.panel.card:hover, .track:hover { transform: translate(-3px, -3px); box-shadow:
 
 .toolkit a { cursor: grab; touch-action: none; user-select: none; }
 .toolkit a:active { cursor: grabbing; }
+
+/* 시작 단계 카드: 검은 바탕에 흰 글자. .section.alt .panel.card 보다 우선해야 한다. */
+.section .steps li.panel.card, .section.alt .steps li.panel.card { background: #0e0e0c; border-color: #0e0e0c; }
+
+/* ── 상단 고정 묶음: 갈색 배너와 머리 ─────────────────────── */
+.top-stack { position: sticky; top: 0; z-index: 20; }
+.top-stack .site-header { position: static; }
+.ad-banner { display: flex; align-items: center; justify-content: center; gap: 14px; min-height: 40px; padding: 8px 20px; background: #3a2112; color: #f6e7d3; font-size: 13.5px; line-height: 1.3; border-bottom: 1px solid #1f1108; }
+.ad-banner:hover { background: #4a2b18; }
+.ad-tag { flex: none; padding: 2px 9px; border-radius: 999px; background: #d9a066; color: #2a1609; font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: .1em; }
+.ad-text { font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ad-go { flex: none; color: #f0c897; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; white-space: nowrap; }
+.ad-banner:focus-visible { outline-color: #f0c897; outline-offset: -3px; }
+@media (max-width: 640px) { .ad-banner { justify-content: space-between; gap: 10px; font-size: 12.5px; } .ad-tag { display: none; } }
+/* 고정 묶음 높이(배너 40 + 머리 64)만큼 아래 요소의 기준을 내린다 */
+.jump { top: 104px; }
+@media (min-width: 1040px) { .toc { top: 124px; max-height: calc(100vh - 148px); } }
+@media (min-width: 1280px) { .side { top: 124px; max-height: calc(100vh - 148px); } }
+.series-title, .prose h2, .prose h3, .glossary dt, section[id], h2[id] { scroll-margin-top: 124px; }
+
+/* ── 2단 제목 구역 (Mobbin: Cloudstudio "What we do") ─────── */
+.split { display: grid; gap: 24px 64px; align-items: end; margin-bottom: 56px; }
+@media (min-width: 900px) { .split { grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); } }
+.split .h-judge { margin: 0; }
+.split .lead { margin: 0 0 20px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; padding: 0; list-style: none; font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); }
+.tags li { display: inline-flex; align-items: center; gap: 8px; }
+.tags li::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--ink); }
+
+/* ── 큰 숫자 카드 (Mobbin: PayPal 진행 단계) ─────────────── */
+.big-n { display: block; margin-bottom: 28px; font-size: clamp(56px, 6vw, 84px); font-weight: 800; letter-spacing: -.06em; line-height: .9; color: var(--ink); }
+.reason h3 { font-size: 22px; }
+.section .steps li.panel.card .big-n { color: #fff; }
+.steps li.panel.card { padding: 32px; }
+.steps li h3 { font-size: 26px; }
+
+/* ── 선언 구역과 점 구 (Mobbin: Cloudstudio "Our promise") ── */
+.statement { position: relative; overflow: hidden; background: #0e0e0c; color: #cfcfca; padding: 148px 0; }
+.statement .wrap { position: relative; }
+.statement .eyebrow { color: #fff; }
+.statement h2 { margin: 0 0 32px; font-size: clamp(46px, 8.6vw, 124px); font-weight: 800; letter-spacing: -.06em; line-height: .98; color: #fff; }
+.statement .lead { color: #cfcfca; max-width: 520px; }
+.sphere { position: absolute; top: 50%; right: -6%; width: min(62vw, 760px); height: min(62vw, 760px); transform: translateY(-50%); opacity: .9; pointer-events: none; }
+@media (max-width: 899px) { .sphere { right: -30%; width: 110vw; height: 110vw; opacity: .35; } .statement { padding: 104px 0; } }
+.statement :focus-visible { outline-color: #fff; }
