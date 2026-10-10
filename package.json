@@ -8,7 +8,8 @@
     "preview": "astro preview",
     "test": "npm run build && node --test tests/site.test.mjs",
     "test:fixtures": "node --test tests/fixtures.test.mjs",
-    "check:links": "node scripts/check-links.mjs"
+    "check:links": "node scripts/check-links.mjs",
+    "deploy": "npm test && npm run check:links && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

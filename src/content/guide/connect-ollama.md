@@ -7,9 +7,9 @@ verified: 2026-10-10
 tags: [Msty, Ollama]
 ---
 
-## Msty 안에 Ollama가 들어 있습니다
+## Msty가 Ollama를 직접 관리합니다
 
-Msty Studio는 로컬 엔진 세 가지를 지원합니다. Ollama, MLX, Llama.cpp입니다. 이 가운데 Ollama는 Msty가 직접 설치하고 관리하며, 설정 화면에서는 **Local AI**라는 이름으로 나옵니다. Ollama를 따로 설치하지 않아도 Msty에서 Ollama 모델을 쓸 수 있습니다.
+Msty Studio는 로컬 엔진 세 가지를 지원합니다. Ollama, MLX, Llama.cpp입니다. 이 가운데 Ollama는 Msty가 첫 설정 때 내려받아 직접 관리하며, 설정 화면에서는 **Local AI**라는 이름으로 나옵니다. Ollama를 따로 설치하지 않아도 Msty에서 Ollama 모델을 쓸 수 있습니다.
 
 ## Ollama 모델 받기
 
@@ -30,7 +30,7 @@ GGUF 파일을 가지고 있으면 다시 받지 않아도 됩니다. **Model Hu
 
 ## 따로 설치한 Ollama가 있을 때
 
-공식 문서에는 PC에 따로 설치한 Ollama를 Msty에 연결하는 절차가 나와 있지 않습니다. 확인된 방법은 위의 두 가지, 곧 Model Search에서 같은 모델을 받거나 GGUF 파일을 가져오는 것입니다.
+공식 문서의 Local Models와 Remote Connections 항목을 확인했지만, PC에 따로 설치한 Ollama를 Msty에 연결하는 절차는 나와 있지 않습니다. Remote Connections는 다른 기기의 Msty Studio에 연결하는 기능입니다. 확인된 방법은 위의 두 가지, 곧 Model Search에서 같은 모델을 받거나 GGUF 파일을 가져오는 것입니다.
 
 Ollama를 명령줄로 쓰는 방법은 [Ollama 처음 시작하기](/learn/ollama-first-steps/)에서 다룹니다.
 

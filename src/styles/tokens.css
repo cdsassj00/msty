@@ -11,10 +11,22 @@
 /* @theme 을 쓰지 못하는 환경이면 위 블록 대신 아래 :root 를 쓰고,
    .panel/.chip/... 유틸리티는 이 파일 하단 정의를 그대로 쓴다. */
 :root {
+  color-scheme: light;
+  --paper:#fff; --surf:#f5f5f7; --tint:#ebebf0; --tint2:#e3e3e8;
+  --hair:#d2d2d7; --ink:#1d1d1f; --body:#3a3a3c; --mut:#6e6e73; --faint:#86868b;
+  --accent:#0071e3; --accent-hi:#0066cc;
+  --red:#d70015; --green:#248a3d; --gold:#b25000; --gold-warm:#f3dd7f;
+  --header-bg: rgb(255 255 255 / .78);
+  --hero-glow:#e4efff;
+}
+[data-theme="dark"] {
+  color-scheme: dark;
   --paper:#000; --surf:#1c1c1e; --tint:#2c2c2e; --tint2:#3a3a3c;
   --hair:#38383a; --ink:#f5f5f7; --body:#d1d1d6; --mut:#98989d; --faint:#6e6e73;
   --accent:#0a84ff; --accent-hi:#409cff;
   --red:#ff453a; --green:#30d158; --gold:#ffd60a; --gold-warm:#f3dd7f;
+  --header-bg: rgb(0 0 0 / .72);
+  --hero-glow:#10203a;
 }
 
 /* ─── 전역 타이포 규칙 (Pretendard 특성 살리기) ──────────── */

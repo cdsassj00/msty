@@ -10,7 +10,7 @@ npm run dev            # http://localhost:4321
 npm test               # 빌드 후 dist 검사
 npm run test:fixtures  # draft·잘못된 머리말 검사
 npm run check:links    # 외부 링크 검사 (빌드 후)
-npx wrangler deploy    # 배포 (빌드 후)
+npm run deploy         # 테스트와 링크 검사를 통과하면 배포
 ```
 
 ## 글 쓰기

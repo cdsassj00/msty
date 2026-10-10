@@ -3,7 +3,7 @@ export const SITE = {
   tagline: '보안 걱정 없이 AI 쓰기',
   description: '내 PC에서 돌리는 로컬 우선 AI의 한국어 가이드. Msty, Ollama, Gemma, 임베딩을 다룹니다.',
   url: 'https://msty.kr',
-  email: 'sjshin@cdsa.or.kr',
+  email: 'sjshin@cdsa.kr',
   operator: '한국데이터사이언티스트협회',
   disclosure: '이 사이트는 한국데이터사이언티스트협회가 운영하는 비공식 한국어 가이드이며 Msty 본사와 제휴 관계가 아닙니다.',
   mstyDownload: 'https://msty.ai/products/studio/',

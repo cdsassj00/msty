@@ -14,7 +14,7 @@
 
 - 사이트 주소는 `https://msty.kr`. 글 주소는 `/{collection}/{id}/`, `id`는 영문 소문자와 하이픈만 쓴다.
 - 모든 페이지 푸터에 이 문장을 그대로 넣는다: `이 사이트는 한국데이터사이언티스트협회가 운영하는 비공식 한국어 가이드이며 Msty 본사와 제휴 관계가 아닙니다.`
-- 전화번호를 어디에도 싣지 않는다. 연락처는 `sjshin@cdsa.or.kr`만 쓴다.
+- 전화번호를 어디에도 싣지 않는다. 연락처는 `sjshin@cdsa.kr`만 쓴다.
 - 설치 파일과 책 PDF를 저장소에 넣지 않는다. Msty 다운로드는 `https://msty.ai/products/studio/`로만 링크한다.
 - Msty 로고, 브랜드 색, 원문 문구, 이미지를 쓰지 않는다.
 - 배경 `#000`, 표면 `#1c1c1e`, 액센트 `#0a84ff`. 모션은 스크롤 페이드업과 히어로 라인마스크만 쓰고 `prefers-reduced-motion`에서 끈다.
@@ -175,7 +175,7 @@ export const SITE = {
   tagline: '보안 걱정 없이 AI 쓰기',
   description: '내 PC에서 돌리는 로컬 우선 AI의 한국어 가이드. Msty, Ollama, Gemma, 임베딩을 다룹니다.',
   url: 'https://msty.kr',
-  email: 'sjshin@cdsa.or.kr',
+  email: 'sjshin@cdsa.kr',
   operator: '한국데이터사이언티스트협회',
   disclosure: '이 사이트는 한국데이터사이언티스트협회가 운영하는 비공식 한국어 가이드이며 Msty 본사와 제휴 관계가 아닙니다.',
   mstyDownload: 'https://msty.ai/products/studio/',

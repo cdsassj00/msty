@@ -23,3 +23,9 @@ test('머리말이 틀리면 빌드가 실패한다', () => {
   writeFileSync(f, '---\ntitle: 날짜 없음\n---\n본문\n');
   try { assert.notEqual(build().status, 0); } finally { rmSync(f); }
 });
+
+test('date가 비어 있으면 빌드가 실패한다', () => {
+  const f = 'src/content/news/zz-bad-fixture.md';
+  writeFileSync(f, ['---', 'title: 빈 날짜', 'description: 설명', 'date:', '---', '본문', ''].join('\n'));
+  try { assert.notEqual(build().status, 0); } finally { rmSync(f); }
+});

@@ -106,3 +106,24 @@ test('MVP 글 7편이 있고 내부 링크가 깨지지 않는다', () => {
     }
   }
 });
+
+test('연락처는 sjshin@cdsa.kr만 쓴다', () => {
+  for (const f of htmlFiles()) {
+    const html = readFileSync(f, 'utf8');
+    assert.ok(html.includes('mailto:sjshin@cdsa.kr'), f);
+    assert.ok(!html.includes('cdsa.or.kr'), f);
+  }
+});
+
+test('라이트가 기본 테마이고 다크로 바꿀 수 있다', () => {
+  const html = read('index.html');
+  assert.doesNotMatch(html, /<html[^>]*data-theme=/);
+  assert.match(html, /:root\{[^}]*--paper:#fff/);
+  assert.match(html, /\[data-theme=dark\]\{[^}]*--paper:#000/);
+  assert.match(html, /<button[^>]*id="theme-toggle"/);
+});
+
+test('홈과 가이드가 제품 상태를 같게 적는다', () => {
+  assert.match(read('index.html'), /Go<\/h3>[\s\S]*?무료 베타/);
+  assert.match(read('guide/what-is-msty/index.html'), /무료 베타/);
+});

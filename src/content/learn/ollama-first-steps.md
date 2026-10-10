@@ -73,7 +73,7 @@ Ollama는 내 PC에서 API를 제공합니다. 공식 예시는 `http://localhos
 
 ## 화면에서 쓰려면
 
-명령줄이 불편하면 Msty Studio를 씁니다. Msty는 Ollama를 앱 안에 포함하고 있어 화면에서 모델을 검색하고 받을 수 있습니다. 방법은 [Msty에서 Ollama 모델 쓰기](/guide/connect-ollama/)에 있습니다.
+명령줄이 불편하면 Msty Studio를 씁니다. Msty는 Ollama를 직접 내려받아 관리하므로 화면에서 모델을 검색하고 받을 수 있습니다. 방법은 [Msty에서 Ollama 모델 쓰기](/guide/connect-ollama/)에 있습니다.
 
 ## 참고한 문서
 
