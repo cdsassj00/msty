@@ -358,3 +358,6 @@ a.panel.card:hover, .track:hover { transform: translate(-3px, -3px); box-shadow:
 .diagram .wire { background: #fff; }
 .side li a[aria-current="page"]::before { color: #fff; }
 .dots.invert { --dot: #fff; }
+
+.toolkit a { cursor: grab; touch-action: none; user-select: none; }
+.toolkit a:active { cursor: grabbing; }

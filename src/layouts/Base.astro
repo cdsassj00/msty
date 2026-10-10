@@ -79,6 +79,64 @@ const beacon = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
         // 탭이 가려져 그리기가 멈춘 경우에 대비해 주기적으로도 확인한다.
         const timer = setInterval(() => { check(); if (pending.length === 0) clearInterval(timer); }, 600);
       })();
+      // 작은 라벨이 화면에 들어올 때 글자가 섞였다가 맞춰지는 효과. 모션 줄이기 설정이면 건너뛴다.
+      (() => {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        const glyphs = '01<>/=+*#%&';
+        let labels = [...document.querySelectorAll('.eyebrow')];
+        const run = (el) => {
+          const text = el.textContent;
+          el.setAttribute('aria-label', text);
+          let frame = 0;
+          const total = 18;
+          const tick = () => {
+            frame++;
+            const fixed = Math.floor((frame / total) * text.length);
+            el.textContent = [...text].map((ch, i) => (i < fixed || ch === ' ' ? ch : glyphs[Math.floor(Math.random() * glyphs.length)])).join('');
+            if (frame < total) setTimeout(tick, 40); else el.textContent = text;
+          };
+          tick();
+        };
+        const check = () => {
+          labels = labels.filter((el) => {
+            if (el.getBoundingClientRect().top > innerHeight * 0.9) return true;
+            run(el);
+            return false;
+          });
+        };
+        check();
+        addEventListener('scroll', check, { passive: true });
+      })();
+      // 검은 패널의 알약을 끌어서 던질 수 있게 한다. 짧게 누르면 그대로 링크로 이동한다.
+      (() => {
+        const box = document.querySelector('.toolkit');
+        if (!box || matchMedia('(prefers-reduced-motion: reduce)').matches || !matchMedia('(pointer: fine)').matches) return;
+        for (const pill of box.querySelectorAll('a')) {
+          let x = 0, y = 0, vx = 0, vy = 0, sx = 0, sy = 0, lx = 0, ly = 0, moved = false, dragging = false, raf = 0;
+          const paint = () => { pill.style.transform = `translate(${x}px, ${y}px)`; };
+          const coast = () => {
+            vx *= 0.94; vy *= 0.94; x += vx; y += vy;
+            const b = box.getBoundingClientRect(), r = pill.getBoundingClientRect();
+            if (r.left < b.left || r.right > b.right) { vx = -vx * 0.7; x += vx * 2; }
+            if (r.top < b.top || r.bottom > b.bottom) { vy = -vy * 0.7; y += vy * 2; }
+            paint();
+            if (Math.abs(vx) + Math.abs(vy) > 0.3) raf = requestAnimationFrame(coast);
+          };
+          pill.addEventListener('pointerdown', (e) => {
+            dragging = true; moved = false; sx = e.clientX - x; sy = e.clientY - y; lx = e.clientX; ly = e.clientY;
+            cancelAnimationFrame(raf); pill.setPointerCapture(e.pointerId); pill.style.transition = 'none';
+          });
+          pill.addEventListener('pointermove', (e) => {
+            if (!dragging) return;
+            if (Math.abs(e.clientX - sx - x) + Math.abs(e.clientY - sy - y) > 4) moved = true;
+            vx = e.clientX - lx; vy = e.clientY - ly; lx = e.clientX; ly = e.clientY;
+            x = e.clientX - sx; y = e.clientY - sy; paint();
+          });
+          pill.addEventListener('pointerup', () => { dragging = false; if (moved) raf = requestAnimationFrame(coast); });
+          pill.addEventListener('click', (e) => { if (moved) e.preventDefault(); });
+          pill.addEventListener('dragstart', (e) => e.preventDefault());
+        }
+      })();
       document.getElementById('theme-toggle').addEventListener('click', () => {
         const root = document.documentElement;
         const dark = root.dataset.theme !== 'dark';
