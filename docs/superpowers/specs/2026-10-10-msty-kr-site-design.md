@@ -47,11 +47,11 @@
 | 콘텐츠 | Astro 콘텐츠 컬렉션, 마크다운 | 책 원고로 재사용하기 쉽다 |
 | 스타일 | ssjsite `design-tokens.css`를 순수 CSS로 사용 | Tailwind 의존을 줄인다. VibeStack 보드와 같은 톤 |
 | 폰트 | Pretendard Variable (jsDelivr) | ssjsite 규칙 |
-| 호스팅 | Cloudflare Pages, GitHub 저장소 연동 | `main` push 시 자동 배포. DNS와 한곳에서 관리 |
+| 호스팅 | Cloudflare Workers 정적 자산, GitHub 저장소 연동 | Cloudflare의 현재 Astro 안내 방식. `main` push 시 자동 배포. DNS와 한곳에서 관리 |
 | 분석 | Cloudflare Web Analytics | 쿠키 없음. 동의 배너가 필요 없다 |
 | 검색 | 없음 (MVP) | 글이 30편을 넘으면 검토한다 |
 
-Cloudflare의 정적 사이트 권장 방식(Pages와 Workers 정적 자산)은 구현 계획 작성 때 공식 문서로 확인하고, 권장이 바뀌었으면 그쪽을 따른다.
+2026-10-10에 Cloudflare 공식 Astro 안내를 확인해 Workers 정적 자산(`wrangler.jsonc`의 `assets`)으로 정했다.
 
 ### 디렉터리
 
@@ -61,7 +61,6 @@ src/
     guide/     Msty 가이드 (책의 장 순서)
     learn/     로컬 AI 학습
     news/      소식
-    lab/       실습 (MVP는 외부 데모 링크 카드)
   content.config.ts   컬렉션 스키마
   layouts/     Base.astro, Article.astro
   components/  Header, Footer, Card, Chip, DownloadCta, Disclosure
@@ -86,14 +85,14 @@ public/        favicon, og 이미지, _redirects
 컬렉션별 추가:
 
 - `guide`: `order`(숫자, 책의 장 순서), `verified`(날짜, 현재 앱 화면과 대조한 날).
-- `lab`: `demoUrl`(외부 데모 주소), `runsIn`(`browser` 또는 `desktop`).
+- 실습 카드는 컬렉션이 아니라 `src/data/lab.json`에 둔다 (`name`, `url`, `desc`). 데모를 사이트 안으로 옮기는 후속 단계에서 컬렉션으로 바꾼다.
 
 ## 4. 사이트 구조와 MVP 콘텐츠
 
 | 경로 | 내용 |
 |---|---|
 | `/` | 히어로("보안 걱정 없이 AI 쓰기"), 로컬 우선 AI 한 단락, Msty 제품 4종 카드, 다운로드 버튼, 최신 글 6개, 책 카드 |
-| `/download` | 운영체제별 안내와 Msty 공식 다운로드 페이지로 가는 버튼. 설치 가이드로 연결 |
+| `/download` | 운영체제별 안내와 Msty 공식 Studio 페이지(`https://msty.ai/products/studio/`)로 가는 버튼. 설치 가이드로 연결 |
 | `/guide/` | Msty 가이드 목록 (`order` 순) |
 | `/learn/` | 로컬 AI 학습 목록 |
 | `/news/` | 소식 목록 (최신순) |
@@ -173,7 +172,7 @@ Msty의 로고와 브랜드 색은 쓰지 않는다. 제품은 이름과 글로�
 
 순서:
 
-1. Cloudflare가 주는 임시 주소(`*.pages.dev`)에서 검수한다.
+1. Cloudflare가 주는 임시 주소(`*.workers.dev`)에서 검수한다.
 2. `msty.kr`과 `msty.co.kr`의 현재 네임서버, 등록 기관, MX 레코드를 조회해 기록한다. 메일을 쓰고 있으면 MX를 그대로 옮긴다.
 3. `msty.kr`을 Cloudflare에 연결한다. `www.msty.kr`은 `msty.kr`로 301.
 4. `msty.co.kr`과 `www.msty.co.kr`은 `msty.kr`의 같은 경로로 301.
