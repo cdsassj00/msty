@@ -1,10 +1,10 @@
 ---
 title: Msty Go Working Styles — 다섯 가지 작업 방식 고르기
 description: Go가 계획하고 실행하고 보고하는 태도를 정하는 Working Styles의 다섯 가지 기본 방식, 설정 위치, 상속 규칙, 팀 적용 요령을 설명합니다.
-date: 2026-10-12
+date: 2026-10-11
 section: Msty Go
 order: 30
-verified: 2026-10-12
+verified: 2026-10-11
 tags: [Msty, Go, Working Styles, 설정]
 ---
 

@@ -1,10 +1,10 @@
 ---
 title: Msty Go 시작하기 — 설치부터 첫 실행 검증까지
 description: Msty Go를 설치하고 모델 제공업체 연결, 기본 작업 방식, 첫 에이전트, 보안 기준, 도구, 채널과 동기화까지 공식 Setup 문서의 순서대로 설정하는 방법을 정리합니다.
-date: 2026-10-12
+date: 2026-10-11
 section: Msty Go
 order: 10
-verified: 2026-10-12
+verified: 2026-10-11
 tags: [Msty, Go, 설치, 설정, 에이전트]
 ---
 

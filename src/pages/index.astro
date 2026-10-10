@@ -12,6 +12,10 @@ import links from '../data/model-links.json';
 const [all, guides, learn] = await Promise.all([getAllPosts(), getPosts('guide'), getPosts('learn')]);
 const latest = all.slice(0, 6);
 
+// 제품별 가이드 편수. 제품 카드에 함께 보여 준다.
+const bySection = (name: string) => guides.filter((g: any) => g.data.section === name).length;
+const guideCount: Record<string, number> = { Studio: guides.length - bySection('Msty Go') - bySection('Msty Nexus') - bySection('Msty 제품과 요금'), Go: bySection('Msty Go') + 1, Nexus: bySection('Msty Nexus') + 1 };
+
 const stats = [
   { n: guides.length, label: 'Msty 가이드', href: '/guide/', c: 'blue' },
   { n: learn.length, label: '로컬 AI 학습 글', href: '/learn/', c: 'purple' },
@@ -197,7 +201,7 @@ const faqs = [
             <h3>Msty {p.name}</h3>
             <p class="role">{p.role}</p>
             <ul>{p.points.map((x) => <li>{x}</li>)}</ul>
-            <span class="go">{p.name} 자세히 보기 →</span>
+            <span class="go">{p.name} 자세히 보기{guideCount[p.name] ? ` · 가이드 ${guideCount[p.name]}편` : ""} →</span>
           </a>
         ))}
       </div>

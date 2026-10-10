@@ -1,10 +1,10 @@
 ---
 title: Msty Go 모델 제공업체 설정과 Model Assignments
 description: Go에서 클라우드·로컬 모델 제공업체를 연결하는 방법, 사용자 정의 모델과 메타데이터, 작업별 모델 배정(Model Assignments), 로컬 모델 검색과 설치를 설명합니다.
-date: 2026-10-12
+date: 2026-10-11
 section: Msty Go
 order: 40
-verified: 2026-10-12
+verified: 2026-10-11
 tags: [Msty, Go, 모델, 제공업체, Ollama, MLX]
 ---
 

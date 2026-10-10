@@ -1,10 +1,10 @@
 ---
 title: Msty Go 에이전트 만들기와 관리
 description: Go의 실행 단위인 에이전트가 무엇으로 이루어지는지, 작업 공간·경로·실행 방식 선택지, Computer Use, 대화를 에이전트로 넘기는 handoff, 운영 요령을 설명합니다.
-date: 2026-10-12
+date: 2026-10-11
 section: Msty Go
 order: 20
-verified: 2026-10-12
+verified: 2026-10-11
 tags: [Msty, Go, 에이전트, 컨테이너, Computer Use]
 ---
 
