@@ -77,3 +77,17 @@ test('실습 페이지에 데모 카드 8개가 있다', () => {
   const html = read('lab/index.html');
   assert.equal([...html.matchAll(/href="https:\/\/ag-firebase-board-2026\.web\.app\/browser\/\d\d-[a-z-]+"/g)].length, 8);
 });
+
+test('피드가 유효하다', () => {
+  const feed = JSON.parse(read('feed.json'));
+  assert.ok(feed.items.length >= 1);
+  for (const it of feed.items) {
+    assert.deepEqual(Object.keys(it).sort(), ['collection', 'date', 'description', 'tags', 'title', 'url']);
+    assert.match(it.url, /^https:\/\/msty\.kr\/(guide|learn|news)\/[a-z0-9-]+\/$/);
+    assert.match(it.date, /^\d{4}-\d{2}-\d{2}$/);
+  }
+  const rss = read('rss.xml');
+  assert.match(rss, /<rss[^>]*version="2\.0"/);
+  assert.equal([...rss.matchAll(/<item>/g)].length, feed.items.length);
+  assert.ok(existsSync(join(DIST, 'sitemap-index.xml')));
+});
