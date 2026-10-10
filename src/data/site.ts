@@ -1,0 +1,20 @@
+export const SITE = {
+  name: 'Msty Korea',
+  tagline: '보안 걱정 없이 AI 쓰기',
+  description: '내 PC에서 돌리는 로컬 우선 AI의 한국어 가이드. Msty, Ollama, Gemma, 임베딩을 다룹니다.',
+  url: 'https://msty.kr',
+  email: 'sjshin@cdsa.or.kr',
+  operator: '한국데이터사이언티스트협회',
+  disclosure: '이 사이트는 한국데이터사이언티스트협회가 운영하는 비공식 한국어 가이드이며 Msty 본사와 제휴 관계가 아닙니다.',
+  mstyDownload: 'https://msty.ai/products/studio/',
+  mstyDocs: 'https://docs.msty.ai/',
+  links: { cdsa: 'https://cdsa.kr', author: 'https://shinsungjin.com', board: 'https://ag-firebase-board-2026.web.app/' },
+  nav: [
+    { href: '/guide/', label: 'Msty 가이드' },
+    { href: '/learn/', label: '로컬 AI 학습' },
+    { href: '/models/', label: '모델 찾기' },
+    { href: '/lab/', label: '실습' },
+    { href: '/news/', label: '소식' },
+    { href: '/book/', label: '책' },
+  ],
+} as const;

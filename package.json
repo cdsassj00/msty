@@ -1,0 +1,21 @@
+{
+  "name": "msty-kr",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "test": "npm run build && node --test tests/site.test.mjs",
+    "test:fixtures": "node --test tests/fixtures.test.mjs",
+    "check:links": "node scripts/check-links.mjs"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.8"
+  },
+  "devDependencies": {
+    "wrangler": "^4.149.0"
+  }
+}

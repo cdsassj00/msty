@@ -1,0 +1,63 @@
+---
+import '../styles/tokens.css';
+import '../styles/site.css';
+import { SITE } from '../data/site';
+
+interface Props { title: string; description?: string }
+const { title, description = SITE.description } = Astro.props;
+const pageTitle = title === SITE.name ? `${SITE.name} — ${SITE.tagline}` : `${title} | ${SITE.name}`;
+const canonical = new URL(Astro.url.pathname, SITE.url).href;
+const beacon = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+---
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title={SITE.name} href="/rss.xml" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">{SITE.name}</a>
+        <nav class="site-nav scroll-thin" aria-label="주 메뉴">
+          {SITE.nav.map((n) => <a href={n.href} aria-current={Astro.url.pathname.startsWith(n.href) ? 'page' : undefined}>{n.label}</a>)}
+        </nav>
+        <a class="btn-link" href="/download/">다운로드</a>
+      </div>
+    </header>
+    <main><slot /></main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>{SITE.disclosure}</p>
+        <p>
+          운영 <a href={SITE.links.cdsa} target="_blank" rel="noopener">{SITE.operator}</a> ·
+          문의 <a href={`mailto:${SITE.email}`}>{SITE.email}</a> ·
+          <a href="/about/">소개</a> · <a href="/rss.xml">RSS</a>
+        </p>
+      </div>
+    </footer>
+    <script is:inline>
+      (() => {
+        const els = document.querySelectorAll('[data-reveal],[data-stagger]');
+        if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('show')); return; }
+        const io = new IntersectionObserver((entries) => {
+          for (const e of entries) if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
+        }, { rootMargin: '0px 0px -8% 0px' });
+        els.forEach((el) => io.observe(el));
+      })();
+    </script>
+    {beacon && <script is:inline defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon={JSON.stringify({ token: beacon })}></script>}
+  </body>
+</html>
