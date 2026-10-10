@@ -1,6 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
+import PostCard from '../components/PostCard.astro';
+import { getAllPosts } from '../lib/posts';
+const latest = (await getAllPosts()).slice(0, 6);
 
 const products = [
   { name: 'Studio', desc: '모델과 대화하고 자료를 정리하는 데스크톱 작업 공간입니다.', status: '사용 가능' },
@@ -45,4 +48,13 @@ const products = [
       <p class="meta" style="margin-top:20px">제품 구성은 2026-10-10에 msty.ai에서 확인했습니다.</p>
     </div>
   </section>
+  {latest.length > 0 && (
+    <section class="section">
+      <div class="wrap">
+        <p class="overline-label">최신 글</p>
+        <h2 class="h-judge" data-reveal>새로 올라온 글</h2>
+        <div class="grid" data-stagger style="margin-top:32px">{latest.map((entry) => <PostCard entry={entry} />)}</div>
+      </div>
+    </section>
+  )}
 </Base>

@@ -1,0 +1,9 @@
+---
+import { LABELS, postUrl, formatDate, type CollectionName } from '../lib/posts';
+const { entry } = Astro.props;
+---
+<a class="panel card" href={postUrl(entry.collection, entry.id)}>
+  <p class="meta">{LABELS[entry.collection as CollectionName].title} · {formatDate(entry.data.date)}</p>
+  <h3>{entry.data.title}</h3>
+  <p>{entry.data.description}</p>
+</a>

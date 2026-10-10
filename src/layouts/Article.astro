@@ -1,0 +1,22 @@
+---
+import Base from './Base.astro';
+import { LABELS, formatDate, type CollectionName } from '../lib/posts';
+const { entry } = Astro.props;
+const label = LABELS[entry.collection as CollectionName];
+const { title, description, date, updated, tags, verified } = entry.data;
+---
+<Base title={title} description={description}>
+  <article class="section">
+    <div class="wrap narrow">
+      <p class="overline-label"><a href={`/${entry.collection}/`}>{label.title}</a></p>
+      <h1 class="h-judge">{title}</h1>
+      <p class="meta">
+        {formatDate(date)}
+        {updated && ` · 수정 ${formatDate(updated)}`}
+        {verified && ` · 공식 문서 확인 ${formatDate(verified)}`}
+      </p>
+      {tags.length > 0 && <div class="chip-row" style="margin-top:12px">{tags.map((t: string) => <span class="chip chip-plain">{t}</span>)}</div>}
+      <div class="prose"><slot /></div>
+    </div>
+  </article>
+</Base>

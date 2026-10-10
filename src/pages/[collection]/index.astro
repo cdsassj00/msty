@@ -1,0 +1,23 @@
+---
+import Base from '../../layouts/Base.astro';
+import PostCard from '../../components/PostCard.astro';
+import { COLLECTIONS, LABELS, getPosts, type CollectionName } from '../../lib/posts';
+
+export function getStaticPaths() {
+  return COLLECTIONS.map((collection) => ({ params: { collection } }));
+}
+const collection = Astro.params.collection as CollectionName;
+const posts = await getPosts(collection);
+const label = LABELS[collection];
+---
+<Base title={label.title} description={label.lead}>
+  <section class="section">
+    <div class="wrap">
+      <h1 class="h-judge">{label.title}</h1>
+      <p class="lead">{label.lead}</p>
+      {posts.length === 0
+        ? <p class="meta" style="margin-top:32px">아직 올라온 글이 없습니다.</p>
+        : <div class="grid" style="margin-top:32px">{posts.map((entry) => <PostCard entry={entry} />)}</div>}
+    </div>
+  </section>
+</Base>

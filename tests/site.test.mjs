@@ -34,3 +34,10 @@ test('자바스크립트 없이도 리빌 요소가 보인다', () => {
   assert.match(css, /\.js \[data-reveal\]/);
   assert.doesNotMatch(css, /(^|[},])\[data-reveal\]\{opacity:0/);
 });
+
+test('글 목록과 상세가 빌드된다', () => {
+  for (const c of ['guide', 'learn', 'news']) assert.ok(existsSync(join(DIST, c, 'index.html')), c);
+  assert.ok(existsSync(join(DIST, 'news', 'site-renewal', 'index.html')));
+  assert.match(read('news/index.html'), /href="\/news\/site-renewal\/"/);
+  assert.match(read('index.html'), /href="\/news\/site-renewal\/"/);
+});
