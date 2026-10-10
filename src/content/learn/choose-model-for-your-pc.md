@@ -2,6 +2,8 @@
 title: 내 PC 사양으로 돌릴 수 있는 모델 고르기
 description: 메모리와 그래픽카드를 확인하고 내 PC에 맞는 모델 크기를 고르는 방법입니다.
 date: 2026-10-10
+series: 로컬 AI 기초
+order: 30
 tags: [모델, 사양]
 ---
 

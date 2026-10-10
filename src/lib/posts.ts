@@ -5,7 +5,7 @@ export type CollectionName = (typeof COLLECTIONS)[number];
 
 export const LABELS: Record<CollectionName, { title: string; lead: string }> = {
   guide: { title: 'Msty 가이드', lead: '설치부터 모델 연결까지 순서대로 따라 합니다.' },
-  learn: { title: '로컬 AI 학습', lead: 'Ollama, 모델 고르기, 임베딩을 다룹니다.' },
+  learn: { title: '로컬 AI 학습', lead: '로컬 모델의 기초부터 Ollama, RAG와 임베딩, 폐쇄망 활용, 직접 만들어 보기까지 순서대로 읽습니다.' },
   news: { title: '소식', lead: 'Msty와 로컬 모델의 새 소식을 정리합니다.' },
 };
 

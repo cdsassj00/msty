@@ -24,7 +24,12 @@ test('모든 페이지에 비공식 표기가 있다', () => {
 });
 
 test('전화번호가 없다', () => {
-  for (const f of htmlFiles()) assert.doesNotMatch(readFileSync(f, 'utf8'), /01[016789][-\s.]?\d{3,4}[-\s.]?\d{4}/, f);
+  // 설명용 가짜 번호(뒤가 전부 0)는 허용한다.
+  for (const f of htmlFiles()) {
+    for (const [num] of readFileSync(f, 'utf8').matchAll(/01[016789][-\s.]?\d{3,4}[-\s.]?\d{4}/g)) {
+      assert.ok(/^01\d\D?0+\D?0+$/.test(num), `${f}: ${num}`);
+    }
+  }
 });
 
 test('자바스크립트 없이도 리빌 요소가 보인다', () => {
@@ -73,9 +78,10 @@ test('모델 찾기 페이지에 링크 50개 이상과 9개 묶음이 있다', 
   for (const u of ['https://lifearchitect.ai/models-table/', 'https://llm-explorer.com/list/?small', 'https://www.hume.ai/benchmark']) assert.ok(links.has(u), u);
 });
 
-test('실습 페이지에 데모 카드 8개가 있다', () => {
+test('실습 페이지에 데모 카드가 20개 이상 있다', () => {
   const html = read('lab/index.html');
-  assert.equal([...html.matchAll(/href="https:\/\/ag-firebase-board-2026\.web\.app\/browser\/\d\d-[a-z-]+"/g)].length, 8);
+  const n = [...html.matchAll(/class="panel card demo-card" href="https:\/\/ag-firebase-board-2026\.web\.app\/browser\/[a-z0-9-]+"/g)].length;
+  assert.ok(n >= 20, `demos: ${n}`);
 });
 
 test('피드가 유효하다', () => {
@@ -126,4 +132,26 @@ test('라이트가 기본 테마이고 다크로 바꿀 수 있다', () => {
 test('홈과 가이드가 제품 상태를 같게 적는다', () => {
   assert.match(read('index.html'), /Go<\/h3>[\s\S]*?무료 베타/);
   assert.match(read('guide/what-is-msty/index.html'), /무료 베타/);
+});
+
+test('학습 글이 시리즈로 묶여 20편 이상 있다', () => {
+  const html = read('learn/index.html');
+  assert.ok([...html.matchAll(/<h2 class="h-judge series-title"/g)].length >= 4);
+  const n = [...html.matchAll(/<a class="panel card" href="\/learn\/[a-z0-9-]+\/"/g)].length;
+  assert.ok(n >= 20, `learn posts: ${n}`);
+});
+
+test('용어 풀이에 용어가 30개 이상 있다', () => {
+  const n = [...read('glossary/index.html').matchAll(/<dt id="[a-z0-9-]+"/g)].length;
+  assert.ok(n >= 30, `terms: ${n}`);
+});
+
+test('운영자 이메일 외의 이메일 주소가 없다', () => {
+  for (const f of htmlFiles()) {
+    for (const [mail] of readFileSync(f, 'utf8').matchAll(/[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+\.[A-Za-z]{2,}(?:\.[A-Za-z]{2,})?/g)) {
+      if (/\.(png|jpg|svg|css|js)$/.test(mail) || /@v?\d/.test(mail)) continue; // 파일 이름·패키지 버전 표기
+      if (mail.endsWith('@example.com')) continue; // 설명용 가짜 주소
+      assert.equal(mail, 'sjshin@cdsa.kr', `${f}: ${mail}`);
+    }
+  }
 });

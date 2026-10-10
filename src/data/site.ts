@@ -14,6 +14,7 @@ export const SITE = {
     { href: '/learn/', label: '로컬 AI 학습' },
     { href: '/models/', label: '모델 찾기' },
     { href: '/lab/', label: '실습' },
+    { href: '/glossary/', label: '용어' },
     { href: '/news/', label: '소식' },
     { href: '/book/', label: '책' },
   ],

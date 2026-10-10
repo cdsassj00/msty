@@ -2,20 +2,29 @@
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
 import demos from '../data/lab.json';
+const groups = [...new Set(demos.map((d) => d.group))];
 ---
 <Base title="실습" description="설치 없이 브라우저에서 바로 해보는 로컬 AI 데모입니다.">
   <section class="section">
     <div class="wrap">
       <h1 class="h-judge">브라우저에서 해보는 로컬 AI</h1>
       <p class="lead">아래 데모는 모델을 내 기기에서 실행합니다. 처음 열 때 모델을 받느라 시간이 걸릴 수 있습니다.</p>
-      <div class="grid" style="margin-top:32px">
-        {demos.map((d) => (
-          <a class="panel card" href={d.url} target="_blank" rel="noopener">
-            <h3>{d.name}</h3>
-            <p>{d.desc}</p>
-          </a>
-        ))}
+      <div class="chip-row" style="margin-top:24px">
+        {groups.map((g, i) => <a class="chip chip-plain" href={`#d${i + 1}`}>{g}</a>)}
       </div>
+      {groups.map((g, i) => (
+        <>
+          <h2 class="h-judge series-title" id={`d${i + 1}`}>{g}</h2>
+          <div class="grid">
+            {demos.filter((d) => d.group === g).map((d) => (
+              <a class="panel card demo-card" href={d.url} target="_blank" rel="noopener">
+                <h3>{d.name}</h3>
+                <p>{d.desc}</p>
+              </a>
+            ))}
+          </div>
+        </>
+      ))}
       <div class="prose narrow">
         <h2>더 큰 모델을 쓰려면</h2>
         <p>브라우저 데모는 작은 모델만 다룹니다. 더 큰 모델은 <a href="/learn/ollama-first-steps/">Ollama</a>로 받고, 화면에서 편하게 쓰려면 <a href="/download/">Msty</a>를 설치합니다.</p>

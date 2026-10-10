@@ -3,7 +3,7 @@ import Base from './Base.astro';
 import { LABELS, formatDate, type CollectionName } from '../lib/posts';
 const { entry } = Astro.props;
 const label = LABELS[entry.collection as CollectionName];
-const { title, description, date, updated, tags, verified } = entry.data;
+const { title, description, date, updated, tags, verified, series } = entry.data;
 ---
 <Base title={title} description={description}>
   <article class="section">
@@ -11,7 +11,7 @@ const { title, description, date, updated, tags, verified } = entry.data;
       <p class="overline-label"><a href={`/${entry.collection}/`}>{label.title}</a></p>
       <h1 class="h-judge">{title}</h1>
       <p class="meta">
-        {formatDate(date)}
+        {series && `${series} · `}{formatDate(date)}
         {updated && ` · 수정 ${formatDate(updated)}`}
         {verified && ` · 공식 문서 확인 ${formatDate(verified)}`}
       </p>

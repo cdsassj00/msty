@@ -11,6 +11,10 @@ img { max-width: 100%; height: auto; }
 a.card:hover { background: var(--tint); }
 .card h3 { margin: 0 0 8px; font-size: 18px; color: var(--ink); }
 .card p { margin: 0; font-size: 14.5px; color: var(--mut); }
+.series-title { font-size: 26px; margin: 64px 0 20px; scroll-margin-top: 72px; }
+.glossary dt { margin-top: 28px; font-size: 18px; font-weight: 600; color: var(--ink); scroll-margin-top: 72px; }
+.glossary dd { margin: 6px 0 0; }
+.glossary .say { margin-top: 8px; padding: 10px 14px; border-radius: 12px; background: var(--surf); font-size: 14.5px; color: var(--body); }
 .meta { font-size: 13px; color: var(--mut); }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip-plain { background: var(--tint2); color: var(--body); }

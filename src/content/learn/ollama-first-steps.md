@@ -2,6 +2,8 @@
 title: Ollama 처음 시작하기
 description: Ollama를 설치하고 명령 한 줄로 모델을 받아 대화합니다.
 date: 2026-10-10
+series: Ollama 실전
+order: 1
 tags: [Ollama, 입문]
 ---
 
