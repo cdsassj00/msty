@@ -1,38 +1,49 @@
 ---
 import Base from '../../layouts/Base.astro';
 import PostCard from '../../components/PostCard.astro';
-import { COLLECTIONS, LABELS, getPosts, type CollectionName } from '../../lib/posts';
-import { SERIES } from '../../data/series';
+import Icon from '../../components/Icon.astro';
+import { COLLECTIONS, LABELS, getPosts, getGroups, GROUP_COLORS, GROUP_ICONS, type CollectionName } from '../../lib/posts';
 
 export function getStaticPaths() {
   return COLLECTIONS.map((collection) => ({ params: { collection } }));
 }
 const collection = Astro.params.collection as CollectionName;
 const posts = await getPosts(collection);
+const groups = await getGroups(collection);
 const label = LABELS[collection];
-// 학습 글은 시리즈로 묶고 시리즈 안에서는 order 순으로 보여 준다.
-const groups = collection === 'learn'
-  ? SERIES.map((name) => ({
-      name,
-      posts: posts.filter((p: any) => p.data.series === name).sort((a: any, b: any) => a.data.order - b.data.order),
-    })).filter((g) => g.posts.length > 0)
-  : [];
+const kicker = collection === 'learn' ? '시리즈' : '묶음';
+const patterns = ['', 'stripe', 'ring'];
 ---
 <Base title={label.title} description={label.lead}>
-  <section class="section">
+  <header class="page-head">
     <div class="wrap">
+      <p class="eyebrow">글 {posts.length}편</p>
       <h1 class="h-judge">{label.title}</h1>
       <p class="lead">{label.lead}</p>
+    </div>
+  </header>
+  <section class="page-body">
+    <div class="wrap">
       {posts.length === 0 && <p class="meta" style="margin-top:32px">아직 올라온 글이 없습니다.</p>}
       {groups.length > 0 && (
-        <div class="chip-row" style="margin-top:24px">
-          {groups.map((g, i) => <a class="chip chip-plain" href={`#s${i + 1}`}>{g.name} {g.posts.length}</a>)}
+        <div class="tracks">
+          {groups.map((g, i) => (
+            <a class={`track c-${GROUP_COLORS[g.name] ?? 'blue'}`} href={`#s${i + 1}`}>
+              <div class={`illus ${patterns[i % 3]}`}><span><Icon name={GROUP_ICONS[g.name] ?? 'book'} size={26} /></span></div>
+              <p class="kicker">{kicker} {i + 1}</p>
+              <h2 class="track-title">{g.name}</h2>
+              <ul>{g.posts.slice(0, 3).map((p) => <li>{p.data.title}</li>)}</ul>
+              <p class="units"><Icon name="book" size={16} /> 글 {g.posts.length}편</p>
+            </a>
+          ))}
         </div>
       )}
       {groups.map((g, i) => (
         <>
-          <h2 class="h-judge series-title" id={`s${i + 1}`}>{g.name}</h2>
-          <div class="grid">{g.posts.map((entry) => <PostCard entry={entry} />)}</div>
+          <h2 class={`h-judge series-title c-${GROUP_COLORS[g.name] ?? 'blue'}`} id={`s${i + 1}`}>
+            <span class="num tabular">{i + 1}</span>{g.name}<span class="count">{g.posts.length}편</span>
+          </h2>
+          <div class="grid">{g.posts.map((entry, k) => <PostCard entry={entry} n={k + 1} />)}</div>
         </>
       ))}
       {groups.length === 0 && posts.length > 0 && (

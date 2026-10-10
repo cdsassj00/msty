@@ -1,22 +1,27 @@
 ---
 import Base from '../layouts/Base.astro';
 import links from '../data/model-links.json';
+const COLORS = ['blue','purple','green','orange','teal','pink'];
 const groups = [...new Set(links.map((l) => l.group))];
 ---
 <Base title="모델 찾기" description="로컬 모델을 찾고, 비교하고, 내 PC에서 도는지 확인하는 사이트 모음입니다.">
-  <section class="section">
+  <header class="page-head">
     <div class="wrap">
       <h1 class="h-judge">모델 찾기</h1>
       <p class="lead">로컬 모델을 찾고, 성능을 비교하고, 내 PC에서 도는지 확인할 수 있는 사이트를 모았습니다. 순위는 자주 바뀌므로 각 사이트에서 직접 확인하세요.</p>
-      <div class="chip-row" style="margin-top:24px">
-        {groups.map((g, i) => <a class="chip chip-plain" href={`#g${i + 1}`}>{g}</a>)}
+    </div>
+  </header>
+  <section class="page-body">
+    <div class="wrap">
+      <div class="chip-row jump scroll-thin">
+        {groups.map((g, i) => <a class={`badge c-${COLORS[i % 6]}`} href={`#g${i + 1}`}>{g}</a>)}
       </div>
       {groups.map((g, i) => (
         <>
-          <h2 class="h-judge" id={`g${i + 1}`} style="font-size:26px;margin:64px 0 20px;scroll-margin-top:72px">{g}</h2>
+          <h2 class={`h-judge series-title c-${COLORS[i % 6]}`} id={`g${i + 1}`}><span class="num tabular">{i + 1}</span>{g}<span class="count">{links.filter((l) => l.group === g).length}곳</span></h2>
           <div class="grid">
             {links.filter((l) => l.group === g).map((l) => (
-              <a class="panel card model-link" href={l.url} target="_blank" rel="noopener">
+              <a class={`panel card post-card model-link c-${COLORS[i % 6]}`} href={l.url} target="_blank" rel="noopener">
                 <h3>{l.name}</h3>
                 <p>{l.desc}</p>
                 {l.note && <p class="meta" style="margin-top:10px">{l.note}</p>}

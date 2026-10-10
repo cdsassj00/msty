@@ -2,6 +2,7 @@
 title: Msty에서 Ollama 모델 쓰기
 description: Msty Studio가 Ollama를 어떻게 다루는지, Ollama 모델을 받고 가져오는 방법을 정리합니다.
 date: 2026-10-10
+section: 시작하기
 order: 5
 verified: 2026-10-10
 tags: [Msty, Ollama]

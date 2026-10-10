@@ -1,6 +1,10 @@
 ---
 import '../styles/tokens.css';
 import '../styles/site.css';
+import '../styles/theme.css';
+import '../styles/sections.css';
+import '../styles/polish.css';
+import '../styles/editorial.css';
 import { SITE } from '../data/site';
 
 interface Props { title: string; description?: string }
@@ -43,22 +47,37 @@ const beacon = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
     <main><slot /></main>
     <footer class="site-footer">
       <div class="wrap">
-        <p>{SITE.disclosure}</p>
-        <p>
-          운영 <a href={SITE.links.cdsa} target="_blank" rel="noopener">{SITE.operator}</a> ·
-          문의 <a href={`mailto:${SITE.email}`}>{SITE.email}</a> ·
-          <a href="/about/">소개</a> · <a href="/rss.xml">RSS</a>
-        </p>
+        <div class="foot-top">
+          <p>Msty Korea · 로컬 우선 AI 한국어 가이드</p>
+          <nav aria-label="바닥 메뉴">
+            <a href="/guide/">가이드</a><a href="/learn/">학습</a><a href="/models/">모델 찾기</a><a href="/lab/">실습</a><a href="/glossary/">용어</a><a href="/about/">소개</a><a href="/rss.xml">RSS</a>
+          </nav>
+        </div>
+        <span class="wordmark" aria-hidden="true">msty korea*</span>
+        <div class="foot-bottom">
+          <p>운영 <a href={SITE.links.cdsa} target="_blank" rel="noopener">{SITE.operator}</a></p>
+          <p>문의 <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+        </div>
       </div>
     </footer>
     <script is:inline>
+      // 화면에 들어온 요소를 나타나게 한다. 위치를 직접 재므로 주소의 #이동이나 숨은 탭에서도 빠뜨리지 않는다.
       (() => {
-        const els = document.querySelectorAll('[data-reveal],[data-stagger]');
-        if (!('IntersectionObserver' in window)) { els.forEach((el) => el.classList.add('show')); return; }
-        const io = new IntersectionObserver((entries) => {
-          for (const e of entries) if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
-        }, { rootMargin: '0px 0px -8% 0px' });
-        els.forEach((el) => io.observe(el));
+        let pending = [...document.querySelectorAll('[data-reveal],[data-stagger]')];
+        let queued = false;
+        const check = () => {
+          queued = false;
+          pending = pending.filter((el) => {
+            if (el.getBoundingClientRect().top > innerHeight * 0.92) return true;
+            el.classList.add('show');
+            return false;
+          });
+        };
+        const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(check); } };
+        check();
+        for (const type of ['scroll', 'resize', 'hashchange', 'load']) addEventListener(type, schedule, { passive: true });
+        // 탭이 가려져 그리기가 멈춘 경우에 대비해 주기적으로도 확인한다.
+        const timer = setInterval(() => { check(); if (pending.length === 0) clearInterval(timer); }, 600);
       })();
       document.getElementById('theme-toggle').addEventListener('click', () => {
         const root = document.documentElement;

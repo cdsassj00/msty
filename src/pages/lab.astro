@@ -2,22 +2,27 @@
 import Base from '../layouts/Base.astro';
 import { SITE } from '../data/site';
 import demos from '../data/lab.json';
+const COLORS = ['blue','purple','green','orange','teal','pink'];
 const groups = [...new Set(demos.map((d) => d.group))];
 ---
 <Base title="실습" description="설치 없이 브라우저에서 바로 해보는 로컬 AI 데모입니다.">
-  <section class="section">
+  <header class="page-head">
     <div class="wrap">
       <h1 class="h-judge">브라우저에서 해보는 로컬 AI</h1>
       <p class="lead">아래 데모는 모델을 내 기기에서 실행합니다. 처음 열 때 모델을 받느라 시간이 걸릴 수 있습니다.</p>
-      <div class="chip-row" style="margin-top:24px">
-        {groups.map((g, i) => <a class="chip chip-plain" href={`#d${i + 1}`}>{g}</a>)}
+    </div>
+  </header>
+  <section class="page-body">
+    <div class="wrap">
+      <div class="chip-row jump scroll-thin">
+        {groups.map((g, i) => <a class={`badge c-${COLORS[i % 6]}`} href={`#d${i + 1}`}>{g}</a>)}
       </div>
       {groups.map((g, i) => (
         <>
-          <h2 class="h-judge series-title" id={`d${i + 1}`}>{g}</h2>
+          <h2 class={`h-judge series-title c-${COLORS[i % 6]}`} id={`d${i + 1}`}><span class="num tabular">{i + 1}</span>{g}<span class="count">{demos.filter((d) => d.group === g).length}개</span></h2>
           <div class="grid">
             {demos.filter((d) => d.group === g).map((d) => (
-              <a class="panel card demo-card" href={d.url} target="_blank" rel="noopener">
+              <a class={`panel card post-card demo-card c-${COLORS[i % 6]}`} href={d.url} target="_blank" rel="noopener">
                 <h3>{d.name}</h3>
                 <p>{d.desc}</p>
               </a>

@@ -1,60 +1,349 @@
 ---
 import Base from '../layouts/Base.astro';
-import { SITE } from '../data/site';
 import PostCard from '../components/PostCard.astro';
-import { getAllPosts } from '../lib/posts';
-const latest = (await getAllPosts()).slice(0, 6);
+import Icon from '../components/Icon.astro';
+import { SITE } from '../data/site';
+import { SERIES } from '../data/series';
+import { getAllPosts, getPosts } from '../lib/posts';
+import demos from '../data/lab.json';
+import terms from '../data/glossary.json';
+import links from '../data/model-links.json';
+
+const [all, guides, learn] = await Promise.all([getAllPosts(), getPosts('guide'), getPosts('learn')]);
+const latest = all.slice(0, 6);
+
+const stats = [
+  { n: guides.length, label: 'Msty 가이드', href: '/guide/', c: 'blue' },
+  { n: learn.length, label: '로컬 AI 학습 글', href: '/learn/', c: 'purple' },
+  { n: demos.length, label: '브라우저 실습', href: '/lab/', c: 'green' },
+  { n: terms.length, label: '용어 풀이', href: '/glossary/', c: 'orange' },
+  { n: links.length, label: '모델 사이트', href: '/models/', c: 'teal' },
+];
+
+const reasons = [
+  { icon: 'lock', c: 'blue', title: '자료가 밖으로 나가지 않습니다', body: '질문과 문서를 내 PC 안의 모델이 처리합니다. 사내 문서, 개인정보가 섞인 자료, 외부 반출이 막힌 업무에 쓸 수 있습니다.' },
+  { icon: 'coin', c: 'green', title: '건수가 늘어도 요금이 붙지 않습니다', body: '모델을 한 번 받으면 몇 번을 물어도 추가 비용이 없습니다. 같은 작업을 수백 건 반복하는 분류, 요약, 정리에 맞습니다.' },
+  { icon: 'swap', c: 'purple', title: '필요할 때만 온라인 모델을 씁니다', body: '어려운 추론이나 긴 글은 온라인 모델에, 민감한 자료는 로컬 모델에 맡깁니다. Msty는 둘을 한 화면에서 골라 쓰게 해 줍니다.' },
+];
 
 const products = [
-  { name: 'Studio', desc: '모델과 대화하고 자료를 정리하는 데스크톱 작업 공간입니다.', status: '사용 가능' },
-  { name: 'Go', desc: '범위를 정해 일을 맡기고 단계마다 확인하는 작업형 에이전트입니다.', status: '무료 베타' },
-  { name: 'Nexus', desc: '모델 연결을 한곳에서 관리하는 AI 제어 센터입니다.', status: '사용 가능' },
-  { name: 'Stack', desc: '승인된 자료를 묶어 여러 AI 앱이 함께 쓰게 하는 지식 묶음입니다.', status: '출시 예정' },
+  {
+    name: 'Studio', icon: 'chat', c: 'blue', role: '개인과 팀의 AI 작업 공간', status: '무료로 시작', href: '/guide/product-studio/',
+    points: ['로컬 모델과 온라인 모델을 한 화면에서 대화', '내 문서를 근거로 답하는 Knowledge Stacks', '여러 모델을 나란히 비교하는 Split Chats', '도구를 쓰는 여러 단계 작업, Agent Mode', '프롬프트·페르소나·스킬을 만들어 재사용'],
+  },
+  {
+    name: 'Go', icon: 'target', c: 'green', role: '범위를 정해 맡기는 에이전트', status: '무료 베타', href: '/guide/product-go/',
+    points: ['할 일과 한계를 정해 에이전트에게 맡김', '단계마다 결과를 확인하고 승인', '데스크톱과 모바일에서 진행 상황 확인', '로컬 모델과 온라인 모델 모두 사용'],
+  },
+  {
+    name: 'Nexus', icon: 'gate', c: 'purple', role: '모델 연결을 관리하는 제어 센터', status: '사용 가능', href: '/guide/product-nexus/',
+    points: ['실행 엔진과 온라인 제공업체를 한곳에서 관리', 'API 키와 앱 토큰 관리', '정책과 사용량 확인', '여러 AI 앱이 같은 관문을 거치게 구성'],
+  },
+  {
+    name: 'Stack', icon: 'layers', c: 'orange', role: '승인된 자료를 묶는 지식 계층', status: '출시 예정', href: '/guide/product-stack/',
+    points: ['검증된 자료를 버전이 있는 묶음으로 관리', '승인된 AI 앱만 꺼내 쓰도록 통제', '팀과 조직 단위의 자료 관리'],
+  },
+];
+
+const features = [
+  { icon: 'cube', c: 'blue', wide: true, pat: '', name: '모델 선택', href: '/guide/models-model-hub/', body: '로컬 엔진(MLX, llama.cpp, Ollama)과 온라인 제공업체를 한곳에 연결하고 대화마다 골라 씁니다.' },
+  { icon: 'book', c: 'green', wide: true, pat: 'stripe', name: 'Knowledge Stacks', href: '/guide/ks-overview/', body: '내 문서와 노트를 넣어 두면 그 내용을 근거로 답하고 출처를 함께 보여 줍니다.' },
+  { icon: 'columns', c: 'purple', pat: 'ring', name: 'Split Chat', href: '/guide/chat-split-chat/', body: '같은 질문을 여러 모델에 동시에 보내 답을 나란히 비교합니다.' },
+  { icon: 'bolt', c: 'orange', pat: '', name: 'Agent Mode', href: '/guide/agent-mode/', body: 'Codex, Claude Code, Gemini CLI 같은 코딩 에이전트를 연결해 여러 단계 작업을 맡깁니다.' },
+  { icon: 'users', c: 'teal', pat: 'stripe', name: 'Crew 대화', href: '/guide/chat-crew-conversations/', body: '역할이 다른 페르소나 여러 명을 한 대화에 불러 함께 검토하게 합니다.' },
+  { icon: 'wand', c: 'pink', pat: 'ring', name: 'Prompt·Persona·Skills', href: '/guide/studio-prompt/', body: '자주 쓰는 프롬프트, 역할, 작업 방식을 만들어 두고 다시 꺼내 씁니다.' },
+  { icon: 'image', c: 'purple', pat: '', name: 'Media Studio', href: '/guide/studio-media/', body: '이미지와 영상을 만듭니다.' },
+  { icon: 'shield', c: 'blue', pat: 'stripe', name: '팀 통제', href: '/guide/security-governance/', body: 'SSO, 역할별 권한, 모델과 기능 제한, 관리자 감사 로그를 제공합니다.' },
+];
+
+const steps = [
+  { n: 1, title: '설치합니다', body: 'Msty 공식 사이트에서 내 운영체제에 맞는 Studio를 받아 설치합니다.', href: '/download/', cta: '다운로드 안내' },
+  { n: 2, title: '첫 모델을 받습니다', body: 'Msty가 내 PC 사양을 확인해 모델을 추천합니다. 가벼운 쪽과 강력한 쪽 사이에서 고릅니다.', href: '/guide/first-run-and-models/', cta: '첫 실행과 모델 받기' },
+  { n: 3, title: '대화를 시작합니다', body: '일반 대화를 열어 질문합니다. 익숙해지면 내 문서를 넣고, 온라인 모델도 함께 연결합니다.', href: '/guide/', cta: '가이드 전체 보기' },
+];
+
+const seriesInfo: Record<string, { body: string; icon: string; c: string }> = {
+  '로컬 AI 기초': { icon: 'cube', c: 'blue', body: '로컬 AI가 무엇인지, 모델 이름과 크기를 읽는 법, 내 PC로 무엇을 돌릴 수 있는지 다룹니다.' },
+  'Ollama 실전': { icon: 'terminal', c: 'green', body: '모델 관리, Modelfile, API 호출, 엑셀·웹 연결, 문제 해결, 사무실에서 함께 쓰기까지 다룹니다.' },
+  'RAG와 임베딩': { icon: 'search', c: 'purple', body: '내 문서를 근거로 답하게 만드는 원리와 방법을 처음부터 설명합니다.' },
+  '폐쇄망·공공기관 활용': { icon: 'building', c: 'teal', body: '외부망이 막힌 환경에서 할 수 있는 AI 업무와 설치 전에 확인할 것을 정리합니다.' },
+  '만들어 보기': { icon: 'hammer', c: 'orange', body: '로컬 챗봇, 엑셀 함수, OCR, 개인정보 점검 도구를 실제 코드와 함께 만듭니다.' },
+};
+const series = SERIES.map((name, i) => {
+  const count = learn.filter((p: any) => p.data.series === name).length;
+  return { name, count, ...seriesInfo[name], href: `/learn/#s${i + 1}` };
+}).filter((s) => s.count > 0);
+
+const picks = ['57-webllm', '55-whisper', '53-doc-search', '54-ocr'];
+const labPicks = picks.map((k) => demos.find((d) => d.url.endsWith(k))).filter(Boolean) as typeof demos;
+
+// 찾아보기 패널의 알약. 관련 글과 목록으로 보낸다.
+const topics = [
+  { name: 'Ollama', href: '/learn/ollama-first-steps/' }, { name: '양자화', href: '/learn/quantization-explained/' },
+  { name: 'GGUF', href: '/glossary/' }, { name: 'RAG', href: '/learn/what-is-rag/' }, { name: '임베딩', href: '/learn/what-is-embedding/' },
+  { name: 'Knowledge Stacks', href: '/guide/ks-overview/' }, { name: '컨텍스트 윈도우', href: '/learn/llm-basics-tokens-context/' },
+  { name: '폐쇄망', href: '/learn/closed-network-ai-tasks/' }, { name: 'Modelfile', href: '/learn/ollama-modelfile-parameters/' },
+  { name: '내 PC 사양', href: '/learn/choose-model-for-your-pc/' }, { name: '모델 순위', href: '/models/' }, { name: 'MCP 도구', href: '/guide/toolbox-tools/' },
+  { name: 'Split Chat', href: '/guide/chat-split-chat/' }, { name: '청크', href: '/learn/chunking-documents/' }, { name: '요금제', href: '/guide/pricing/' },
+];
+
+const faqs = [
+  { q: 'Msty는 무료인가요?', a: 'Studio는 무료 요금제로 시작할 수 있습니다. 로컬·온라인 모델 대화, Agent Mode, Knowledge Stacks 같은 개인용 핵심 기능이 들어 있습니다. 유료 요금제는 Studio Web과 추가 기능을 더합니다.', href: '/guide/pricing/', cta: '요금제 자세히 보기' },
+  { q: '인터넷이 없어도 쓸 수 있나요?', a: '로컬 모델과의 대화는 내 PC에서 처리됩니다. 모델을 내려받을 때와 온라인 제공업체의 모델을 쓸 때는 인터넷이 필요합니다.', href: '/learn/what-is-local-ai/', cta: '로컬 AI와 클라우드 AI의 차이' },
+  { q: '어떤 PC가 필요한가요?', a: 'Studio는 Windows 10·11(64비트), macOS 11 이상, Linux 64비트를 지원합니다. 돌릴 수 있는 모델의 크기는 메모리와 그래픽카드에 따라 달라집니다.', href: '/learn/choose-model-for-your-pc/', cta: '내 PC에 맞는 모델 고르기' },
+  { q: 'Ollama와는 무엇이 다른가요?', a: 'Ollama는 모델을 받아 실행하는 엔진이고 주로 명령줄로 씁니다. Msty Studio는 화면에서 쓰는 작업 공간이며, Ollama를 엔진으로 직접 내려받아 관리합니다.', href: '/guide/connect-ollama/', cta: 'Msty에서 Ollama 모델 쓰기' },
+  { q: '회사 문서를 넣어도 되나요?', a: '로컬 모델을 쓰면 문서가 내 PC 안에서 처리됩니다. 온라인 제공업체를 연결한 대화에서는 내용이 그 업체로 전송됩니다. 설치와 사용 범위는 소속 기관의 보안 지침을 먼저 확인하세요.', href: '/learn/before-install-ask-it-security/', cta: '설치 전에 확인할 것' },
+  { q: '어디서부터 읽으면 되나요?', a: '처음이라면 학습 경로 글에서 순서를 잡고, Msty 설치 가이드로 넘어갑니다. 설치 없이 먼저 느껴 보려면 브라우저 실습을 열어 보세요.', href: '/learn/learning-path/', cta: '학습 경로 보기' },
 ];
 ---
 <Base title={SITE.name}>
-  <section class="hero">
+  <nav class="dots" aria-label="홈 구역">
+    {[['top', '처음'], ['why', '로컬 AI'], ['products', '제품'], ['features', '기능'], ['start', '시작'], ['learn', '학습'], ['lab', '실습'], ['faq', '질문']].map(([id, name]) => <a href={`#${id}`} data-dot={id}>{name}</a>)}
+  </nav>
+  <section class="hero" id="top">
+    <div class="hero-glow" aria-hidden="true"></div>
     <div class="wrap">
-      <h1><span class="ln"><span>보안 걱정 없이</span></span><span class="ln"><span>AI를 쓰는 방법</span></span></h1>
-      <p class="lead">내 문서를 밖으로 보내지 않고 내 PC에서 AI를 돌립니다. Msty와 Ollama로 시작하는 방법을 한국어로 정리합니다.</p>
+     <div class="hero-grid">
+      <div>
+      <p class="eyebrow">MSTY · OLLAMA · RAG · 한국어 가이드</p>
+      <h1>보안 걱정 없이<br /><span class="circled">내 PC에서<svg viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M22 66C18 30 96 10 204 10s182 22 178 56-92 46-190 44S20 100 24 62c2-22 40-38 96-44" /></svg></span> AI 쓰기</h1>
+      <p class="lead">내 문서를 밖으로 보내지 않고 내 PC에서 AI를 돌립니다. Msty의 제품과 기능, Ollama와 로컬 모델, 문서 검색, 폐쇄망 활용까지 한국어로 자세히 설명합니다.</p>
       <div class="actions">
         <a class="btn-pill" href="/download/">Msty 다운로드 안내</a>
-        <a class="btn-link" href="/guide/">가이드부터 읽기</a>
+        <a class="btn-ghost" href="/guide/">Msty 가이드 읽기</a>
+        <a class="btn-ghost" href="/learn/learning-path/">학습 경로 보기</a>
       </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap">
-      <p class="overline-label">로컬 우선 AI</p>
-      <h2 class="h-judge" data-reveal>모델을 내 컴퓨터에 받아서 씁니다</h2>
-      <p class="lead" data-reveal>질문과 문서가 인터넷으로 나가지 않으므로 사내 자료와 개인정보를 다루기 쉽습니다. 인터넷이 끊겨도 동작하고, 필요할 때만 온라인 모델을 함께 씁니다.</p>
-    </div>
-  </section>
-
-  <section class="section" id="products">
-    <div class="wrap">
-      <p class="overline-label">Msty 제품</p>
-      <h2 class="h-judge" data-reveal>네 가지 제품으로 나뉩니다</h2>
-      <div class="grid" data-stagger style="margin-top:32px">
-        {products.map((p) => (
-          <div class="panel card">
-            <h3>{p.name}</h3>
-            <p>{p.desc}</p>
-            <p class="meta" style="margin-top:12px">{p.status}</p>
+      <p class="os-line">지원 환경 <a href="/guide/install-windows/">Windows</a><a href="/guide/install-mac/">macOS</a><a href="/guide/start-linux-web-and-migration/">Linux</a></p>
+      </div>
+      <div class="mock-stage" aria-hidden="true">
+        <div class="mock">
+          <div class="mock-bar"><i></i><i></i><i></i><span>로컬 모델로 대화</span><b>내 PC에서 처리</b></div>
+          <div class="mock-body">
+            <div class="mock-side">
+              <p class="on">새 대화</p><p>계약서 검토</p><p>회의록 정리</p>
+              <small>내 문서</small><p>규정집</p><p>사업 계획서</p>
+              <small>모델</small><p>로컬 모델</p><p>온라인 모델</p>
+            </div>
+            <div class="mock-chat">
+              <p class="bub me">이 계약서에서 해지 조항만 정리해 줘</p>
+              <p class="bub ai"><span>해지와 관련된 조항은 세 곳입니다.</span><span>제12조는 서면 통지 30일 전 해지를,</span><span>제13조는 위반 시 즉시 해지를 정합니다.</span><span class="src">근거: 계약서 4쪽, 5쪽</span></p>
+              <div class="mock-input">질문을 입력하세요</div>
+            </div>
           </div>
+          <div class="mock-foot"><span class="dot"></span>외부로 보낸 내용 없음 · 모델이 내 PC에서 실행 중</div>
+        </div>
+        <p class="mock-note">로컬 모델 대화를 설명하는 예시 그림입니다</p>
+      </div>
+     </div>
+      <ul class="stats">
+        {stats.map((s) => (
+          <li><a href={s.href} class={`c-${s.c}`}><strong class="tabular" data-count={s.n}>{s.n}</strong><span>{s.label}</span></a></li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      {[0, 1].map(() => ['Msty Studio', 'Ollama', '로컬 모델', 'RAG', '임베딩', 'Knowledge Stacks', '폐쇄망', 'Gemma'].map((w) => <span>{w}</span>))}
+    </div>
+  </div>
+
+  <section class="section" id="why">
+    <div class="wrap">
+      <p class="eyebrow">로컬 우선 AI</p>
+      <h2 class="h-judge" data-reveal>모델을 <mark>내 컴퓨터에 받아서</mark> 씁니다</h2>
+      <p class="lead" data-reveal>AI 모델을 회사 밖 서버가 아니라 내 PC에서 실행하는 방식입니다. 온라인 서비스보다 답의 수준은 낮을 수 있지만, 자료를 밖으로 보내지 않아도 됩니다.</p>
+      <div class="flow" data-reveal style="margin:0 0 36px" aria-hidden="true">
+        <span class="flow-node">질문과 문서</span>
+        <span class="flow-line"><i></i></span>
+        <span class="flow-node flow-core"><Icon name="lock" size={16} /> 내 PC의 모델</span>
+        <span class="flow-line"><i></i></span>
+        <span class="flow-node">답</span>
+        <span class="flow-out">외부 서버로 나가지 않음</span>
+      </div>
+      <div class="grid three" data-stagger>
+        {reasons.map((r) => (
+          <div class={`panel card tint c-${r.c}`}><span class="ico"><Icon name={r.icon} /></span><h3>{r.title}</h3><p>{r.body}</p></div>
         ))}
       </div>
-      <p class="meta" style="margin-top:20px">제품 구성은 2026-10-10에 msty.ai에서 확인했습니다.</p>
+      <p class="more"><a class="btn-link" href="/learn/why-run-ai-locally/">로컬에서 돌리는 이유와 한계</a><a class="btn-link" href="/learn/local-or-online-per-task/">작업별로 로컬과 온라인 고르기</a></p>
     </div>
   </section>
+
+  <section class="section dark" id="products">
+    <div class="wrap">
+      <p class="eyebrow">Msty 제품</p>
+      <h2 class="h-judge" data-reveal>네 가지 제품이 하나로 이어집니다</h2>
+      <p class="lead" data-reveal>Msty는 미국에서 만든 로컬 우선 AI 제품군입니다. 필요한 제품 하나로 시작할 수 있고, 모델·에이전트·지식·팀 관리로 넓혀 갈 수 있습니다.</p>
+      <div class="diagram" data-reveal aria-hidden="true">
+        <span class="node">질문과 문서</span><span class="wire"><i></i></span>
+        <span class="node fill">내 PC의 모델</span><span class="wire"><i></i></span>
+        <span class="node">근거가 달린 답</span>
+        <span class="note">외부 서버로 나가지 않음</span>
+      </div>
+      <div class="grid two" data-stagger>
+        {products.map((p) => (
+          <a class={`panel card product c-${p.c}`} href={p.href}>
+            <div class="product-head"><span class="ico"><Icon name={p.icon} size={24} /></span><span class="badge">{p.status}</span></div>
+            <h3>Msty {p.name}</h3>
+            <p class="role">{p.role}</p>
+            <ul>{p.points.map((x) => <li>{x}</li>)}</ul>
+            <span class="go">{p.name} 자세히 보기 →</span>
+          </a>
+        ))}
+      </div>
+      <p class="more"><a class="btn-link" href="/guide/platform-overview/">네 제품이 이어지는 방식</a><a class="btn-link" href="/guide/pricing/">요금제 자세히 보기</a><a class="btn-link" href="/guide/security-governance/">보안과 통제</a><a class="btn-link" href="/guide/solutions-by-industry/">분야별 활용</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="wrap">
+      <p class="eyebrow">Msty Studio</p>
+      <h2 class="h-judge" data-reveal>Studio로 <mark>할 수 있는 일</mark></h2>
+      <p class="lead" data-reveal>Studio는 가장 먼저 설치하는 제품입니다. 기능마다 사용법을 가이드에 따로 정리했습니다.</p>
+      <div class="bento" data-stagger>
+        {features.map((f) => (
+          <a class={`panel card feature c-${f.c} ${f.wide ? 'wide' : ''}`} href={f.href}>
+            <div class={`illus ${f.pat}`}><span><Icon name={f.icon} size={28} /></span></div>
+            <div><h3>{f.name}</h3><p>{f.body}</p><span class="more-link">가이드 보기 →</span></div>
+          </a>
+        ))}
+      </div>
+      <p class="more"><a class="btn-pill" href="/guide/">기능별 가이드 {guides.length}편 보기</a></p>
+    </div>
+  </section>
+
+  <section class="section alt" id="start">
+    <div class="wrap">
+      <p class="eyebrow">시작하기</p>
+      <h2 class="h-judge" data-reveal>세 단계로 시작합니다</h2>
+      <ol class="steps" data-stagger>
+        {steps.map((s) => (
+          <li class="panel card">
+            <span class="step-n tabular">{s.n}</span>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+            <a class="btn-link" href={s.href}>{s.cta} →</a>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+  <section class="section" id="learn">
+    <div class="wrap">
+      <p class="eyebrow">로컬 AI 학습</p>
+      <h2 class="h-judge" data-reveal>순서대로 읽는 <mark>다섯 시리즈</mark></h2>
+      <p class="lead" data-reveal>강의에서 다룬 내용을 글로 옮겼습니다. 기초에서 시작해 직접 만들어 보는 데까지 이어집니다.</p>
+      <div class="grid three" data-stagger>
+        {series.map((s, i) => (
+          <a class={`panel card series c-${s.c}`} href={s.href}>
+            <div class={`illus ${['', 'stripe', 'ring'][i % 3]}`}><span><Icon name={s.icon} size={28} /></span></div>
+            <p class="badge" style="margin-bottom:10px">{s.count}편</p>
+            <h3><span class="num tabular">{i + 1}</span>{s.name}</h3>
+            <p>{s.body}</p>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section alt" id="lab">
+    <div class="wrap">
+      <p class="eyebrow">실습</p>
+      <h2 class="h-judge" data-reveal>설치 없이 브라우저에서 먼저 해 봅니다</h2>
+      <p class="lead" data-reveal>모델을 브라우저로 받아 내 기기에서 돌리는 데모 {demos.length}개가 있습니다. 로컬 AI가 어떤 것인지 가장 빨리 확인하는 방법입니다.</p>
+      <div class="grid four" data-stagger>
+        {labPicks.map((d) => (
+          <a class="panel card c-green" href={d.url} target="_blank" rel="noopener"><span class="ico"><Icon name="play" /></span><h3>{d.name}</h3><p>{d.desc}</p></a>
+        ))}
+      </div>
+      <p class="more"><a class="btn-pill" href="/lab/">실습 {demos.length}개 모두 보기</a></p>
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="wrap">
+      <div class="toolkit-head">
+        <h2 class="h-judge" data-reveal>찾아보기</h2>
+        <p>용어 {terms.length}개 · 모델 사이트 {links.length}곳 — 눌러서 바로 이동</p>
+      </div>
+      <div class="toolkit" data-reveal>
+        {topics.map((t) => <a href={t.href}>{t.name}</a>)}
+      </div>
+      <p class="more"><a class="btn-link" href="/glossary/">용어 풀이 전체</a><a class="btn-link" href="/models/">모델 찾기 전체</a></p>
+    </div>
+  </section>
+
+  <section class="section alt" id="faq">
+    <div class="wrap narrow">
+      <p class="eyebrow">자주 묻는 질문</p>
+      <h2 class="h-judge" data-reveal>처음에 많이 묻는 것</h2>
+      <div class="faq">
+        {faqs.map((f) => (
+          <details>
+            <summary>{f.q}</summary>
+            <p>{f.a}</p>
+            <p><a class="btn-link" href={f.href}>{f.cta} →</a></p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
   {latest.length > 0 && (
     <section class="section">
       <div class="wrap">
-        <p class="overline-label">최신 글</p>
+        <p class="eyebrow">최신 글</p>
         <h2 class="h-judge" data-reveal>새로 올라온 글</h2>
         <div class="grid" data-stagger style="margin-top:32px">{latest.map((entry) => <PostCard entry={entry} />)}</div>
       </div>
     </section>
   )}
+
+  <section class="cta-band">
+    <div class="wrap">
+      <h2>내 PC에서<br />시작하세요.</h2>
+      <div class="actions"><a class="btn-pill light" href="/download/">Msty 다운로드 안내 →</a><a class="btn-ghost on-dark" href="/guide/first-run-and-models/">첫 실행 가이드</a></div>
+      <dl class="cta-meta">
+        <div><dt>요금</dt><dd>Studio 무료로 시작<small>유료 요금제는 선택</small></dd></div>
+        <div><dt>지원 환경</dt><dd>Windows · macOS · Linux</dd></div>
+        <div><dt>처음이라면</dt><dd><a href="/learn/learning-path/">학습 경로 보기</a><small>설치 없이 해 보려면 <a href="/lab/">브라우저 실습</a></small></dd></div>
+      </dl>
+    </div>
+  </section>
 </Base>
+
+<script is:inline>
+  // 구역 점 메뉴: 지금 보이는 구역을 표시하고, 검은 구역 위에서는 점 색을 바꾼다.
+  (() => {
+    const nav = document.querySelector('.dots');
+    if (!nav) return;
+    const items = [...nav.querySelectorAll('a')].map((a) => ({ a, el: document.getElementById(a.dataset.dot) })).filter((x) => x.el);
+    let queued = false;
+    const update = () => {
+      queued = false;
+      const mid = innerHeight / 2;
+      let current = items[0];
+      for (const it of items) if (it.el.getBoundingClientRect().top <= mid) current = it;
+      for (const it of items) it.a.classList.toggle('on', it === current);
+      nav.classList.toggle('invert', current.el.classList.contains('dark'));
+    };
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();
+  // 숫자 카운트업. 모션 줄이기 설정이면 실행하지 않는다.
+  (() => {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    for (const el of document.querySelectorAll('[data-count]')) {
+      const end = Number(el.dataset.count), t0 = performance.now(), dur = 900;
+      const tick = (t) => {
+        const k = Math.min(1, (t - t0) / dur);
+        el.textContent = String(Math.round(end * (1 - Math.pow(1 - k, 3))));
+        if (k < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+    }
+  })();
+</script>

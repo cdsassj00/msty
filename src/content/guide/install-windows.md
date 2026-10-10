@@ -2,6 +2,7 @@
 title: Windows에 Msty Studio 설치하기
 description: Windows 10·11에 Msty Studio를 설치하는 순서입니다.
 date: 2026-10-10
+section: 시작하기
 order: 2
 verified: 2026-10-10
 tags: [Msty, 설치, Windows]

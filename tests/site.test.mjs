@@ -4,7 +4,6 @@ import { readFileSync, readdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 const DIST = 'dist';
-const DISCLOSURE = '이 사이트는 한국데이터사이언티스트협회가 운영하는 비공식 한국어 가이드이며 Msty 본사와 제휴 관계가 아닙니다.';
 
 export function htmlFiles(dir = DIST) {
   return readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
@@ -19,8 +18,13 @@ test('홈이 빌드된다', () => {
   assert.match(read('index.html'), /보안 걱정 없이/);
 });
 
-test('모든 페이지에 비공식 표기가 있다', () => {
-  for (const f of htmlFiles()) assert.ok(readFileSync(f, 'utf8').includes(DISCLOSURE), f);
+test('모든 페이지 푸터에 운영 주체가 있고 제휴 관련 문구는 없다', () => {
+  for (const f of htmlFiles()) {
+    const html = readFileSync(f, 'utf8');
+    assert.ok(html.includes('한국데이터사이언티스트협회'), f);
+    assert.ok(!html.includes('제휴 관계'), f);
+    assert.ok(!html.includes('비공식'), f);
+  }
 });
 
 test('전화번호가 없다', () => {
@@ -44,7 +48,7 @@ test('글 목록과 상세가 빌드된다', () => {
   for (const c of ['guide', 'learn', 'news']) assert.ok(existsSync(join(DIST, c, 'index.html')), c);
   assert.ok(existsSync(join(DIST, 'news', 'site-renewal', 'index.html')));
   assert.match(read('news/index.html'), /href="\/news\/site-renewal\/"/);
-  assert.equal([...read('index.html').matchAll(/<a class="panel card" href="\/(guide|learn|news)\/[a-z0-9-]+\/"/g)].length, 6);
+  assert.equal([...read('index.html').matchAll(/<a class="panel card post-card[^"]*" href="\/(guide|learn|news)\/[a-z0-9-]+\/"/g)].length, 6);
 });
 
 test('다운로드 페이지는 공식 사이트로만 보낸다', () => {
@@ -56,7 +60,7 @@ test('다운로드 페이지는 공식 사이트로만 보낸다', () => {
 test('책·소개·404 페이지가 있다', () => {
   assert.match(read('book/index.html'), /5,000원/);
   assert.match(read('book/index.html'), /2024-12-06/);
-  assert.match(read('about/index.html'), /제휴 관계가 아닙니다/);
+  assert.match(read('about/index.html'), /한국데이터사이언티스트협회/);
   assert.ok(existsSync(join(DIST, '404.html')));
 });
 
@@ -80,7 +84,7 @@ test('모델 찾기 페이지에 링크 50개 이상과 9개 묶음이 있다', 
 
 test('실습 페이지에 데모 카드가 20개 이상 있다', () => {
   const html = read('lab/index.html');
-  const n = [...html.matchAll(/class="panel card demo-card" href="https:\/\/ag-firebase-board-2026\.web\.app\/browser\/[a-z0-9-]+"/g)].length;
+  const n = [...html.matchAll(/class="panel card post-card demo-card[^"]*" href="https:\/\/ag-firebase-board-2026\.web\.app\/browser\/[a-z0-9-]+"/g)].length;
   assert.ok(n >= 20, `demos: ${n}`);
 });
 
@@ -130,14 +134,14 @@ test('라이트가 기본 테마이고 다크로 바꿀 수 있다', () => {
 });
 
 test('홈과 가이드가 제품 상태를 같게 적는다', () => {
-  assert.match(read('index.html'), /Go<\/h3>[\s\S]*?무료 베타/);
+  assert.match(read('index.html'), /무료 베타<\/span><\/div><h3>Msty Go<\/h3>/);
   assert.match(read('guide/what-is-msty/index.html'), /무료 베타/);
 });
 
 test('학습 글이 시리즈로 묶여 20편 이상 있다', () => {
   const html = read('learn/index.html');
-  assert.ok([...html.matchAll(/<h2 class="h-judge series-title"/g)].length >= 4);
-  const n = [...html.matchAll(/<a class="panel card" href="\/learn\/[a-z0-9-]+\/"/g)].length;
+  assert.ok([...html.matchAll(/<h2 class="h-judge series-title/g)].length >= 4);
+  const n = [...html.matchAll(/<a class="panel card post-card[^"]*" href="\/learn\/[a-z0-9-]+\/"/g)].length;
   assert.ok(n >= 20, `learn posts: ${n}`);
 });
 
@@ -154,4 +158,18 @@ test('운영자 이메일 외의 이메일 주소가 없다', () => {
       assert.equal(mail, 'sjshin@cdsa.kr', `${f}: ${mail}`);
     }
   }
+});
+
+test('Msty 가이드가 묶음으로 나뉘어 35편 이상 있다', () => {
+  const html = read('guide/index.html');
+  assert.ok([...html.matchAll(/<h2 class="h-judge series-title/g)].length >= 7);
+  const n = [...html.matchAll(/<a class="panel card post-card[^"]*" href="\/guide\/[a-z0-9-]+\/"/g)].length;
+  assert.ok(n >= 35, `guide posts: ${n}`);
+});
+
+test('홈이 제품, 기능, 시작 순서, 학습, 실습, 질문을 모두 보여 준다', () => {
+  const html = read('index.html');
+  for (const id of ['why', 'products', 'features', 'start', 'learn', 'lab', 'tools', 'faq']) assert.match(html, new RegExp(`<section[^>]*id="${id}"`), id);
+  for (const href of ['/guide/product-studio/', '/guide/product-go/', '/guide/product-nexus/', '/guide/product-stack/', '/guide/pricing/']) assert.ok(html.includes(`href="${href}"`), href);
+  assert.ok([...html.matchAll(/<details/g)].length >= 5);
 });

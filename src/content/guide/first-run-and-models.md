@@ -2,6 +2,7 @@
 title: 첫 실행과 모델 받기
 description: Msty Studio를 처음 켠 뒤 로컬 모델을 받아 첫 대화를 하기까지입니다.
 date: 2026-10-10
+section: 시작하기
 order: 4
 verified: 2026-10-10
 tags: [Msty, 모델]

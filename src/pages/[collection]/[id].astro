@@ -1,16 +1,21 @@
 ---
 import { render } from 'astro:content';
 import Article from '../../layouts/Article.astro';
-import { COLLECTIONS, getPosts } from '../../lib/posts';
+import { COLLECTIONS, getOrdered, getGroups, groupOf } from '../../lib/posts';
 
 export async function getStaticPaths() {
   const paths = [];
   for (const collection of COLLECTIONS) {
-    for (const entry of await getPosts(collection)) paths.push({ params: { collection, id: entry.id }, props: { entry } });
+    const ordered = await getOrdered(collection);
+    const groups = await getGroups(collection);
+    ordered.forEach((entry, i) => {
+      const siblings = groups.find((g) => g.name === groupOf(entry))?.posts ?? [];
+      paths.push({ params: { collection, id: entry.id }, props: { entry, prev: ordered[i - 1], next: ordered[i + 1], siblings } });
+    });
   }
   return paths;
 }
-const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { entry, prev, next, siblings } = Astro.props;
+const { Content, headings } = await render(entry);
 ---
-<Article entry={entry}><Content /></Article>
+<Article entry={entry} headings={headings} prev={prev} next={next} siblings={siblings}><Content /></Article>

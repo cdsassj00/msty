@@ -5,7 +5,6 @@ export const SITE = {
   url: 'https://msty.kr',
   email: 'sjshin@cdsa.kr',
   operator: '한국데이터사이언티스트협회',
-  disclosure: '이 사이트는 한국데이터사이언티스트협회가 운영하는 비공식 한국어 가이드이며 Msty 본사와 제휴 관계가 아닙니다.',
   mstyDownload: 'https://msty.ai/products/studio/',
   mstyDocs: 'https://docs.msty.ai/',
   links: { cdsa: 'https://cdsa.kr', author: 'https://shinsungjin.com', board: 'https://ag-firebase-board-2026.web.app/' },

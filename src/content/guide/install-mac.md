@@ -2,6 +2,7 @@
 title: Mac에 Msty Studio 설치하기
 description: Apple Silicon과 Intel Mac에 Msty Studio를 설치하는 순서입니다.
 date: 2026-10-10
+section: 시작하기
 order: 3
 verified: 2026-10-10
 tags: [Msty, 설치, Mac]

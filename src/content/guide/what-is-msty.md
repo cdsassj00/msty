@@ -2,6 +2,7 @@
 title: Msty란 무엇인가
 description: 로컬 우선 AI가 무엇인지, Msty의 네 가지 제품이 각각 무슨 일을 하는지 정리합니다.
 date: 2026-10-10
+section: 시작하기
 order: 1
 verified: 2026-10-10
 tags: [Msty, 입문]
