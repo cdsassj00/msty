@@ -27,4 +27,5 @@ function externalLinks() {
 export default defineConfig({
   site: 'https://msty.kr',
   integrations: [sitemap(), externalLinks()],
+  build: { inlineStylesheets: 'always' },
 });

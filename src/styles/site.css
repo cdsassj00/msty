@@ -11,9 +11,11 @@ img { max-width: 100%; height: auto; }
 a.card:hover { background: var(--tint); }
 .card h3 { margin: 0 0 8px; font-size: 18px; color: var(--ink); }
 .card p { margin: 0; font-size: 14.5px; color: var(--mut); }
-.meta { font-size: 13px; color: var(--faint); }
+.meta { font-size: 13px; color: var(--mut); }
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
 .chip-plain { background: var(--tint2); color: var(--body); }
+.btn-pill { background: #0071e3; }
+.btn-pill:hover { background: var(--accent); }
 .actions { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-top: 32px; }
 
 .site-header { position: sticky; top: 0; z-index: 10; background: rgb(0 0 0 / .72); -webkit-backdrop-filter: saturate(180%) blur(20px); backdrop-filter: saturate(180%) blur(20px); border-bottom: 1px solid var(--hair); }

@@ -30,7 +30,7 @@ test('전화번호가 없다', () => {
 test('자바스크립트 없이도 리빌 요소가 보인다', () => {
   const html = read('index.html');
   assert.match(html, /document\.documentElement\.classList\.add\(['"]js['"]\)/);
-  const css = readdirSync(join(DIST, '_astro')).filter((f) => f.endsWith('.css')).map((f) => readFileSync(join(DIST, '_astro', f), 'utf8')).join('');
+  const css = html; // 스타일은 HTML에 인라인된다
   assert.match(css, /\.js \[data-reveal\]/);
   assert.doesNotMatch(css, /(^|[},])\[data-reveal\]\{opacity:0/);
 });
