@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+<Base title="소개" description="msty.kr을 누가, 왜 운영하는지 밝힙니다.">
+  <section class="section">
+    <div class="wrap narrow">
+      <h1 class="h-judge">소개</h1>
+      <div class="prose">
+        <h2>무엇을 하는 사이트인가</h2>
+        <p>내 PC에서 AI 모델을 돌리는 방법을 한국어로 정리합니다. Msty 사용법과 함께 Ollama, Gemma, 임베딩 같은 로컬 우선 AI의 학습 자료와 소식을 다룹니다.</p>
+        <h2>운영</h2>
+        <p><a href={SITE.links.cdsa} target="_blank" rel="noopener">{SITE.operator}</a>가 운영합니다. 글은 <a href={SITE.links.author} target="_blank" rel="noopener">신성진</a>이 씁니다.</p>
+        <h2>Msty와의 관계</h2>
+        <p>{SITE.disclosure}</p>
+        <p>Msty의 이름과 상표는 Msty의 것입니다. 설치 파일은 이 사이트에 올리지 않으며 <a href={SITE.mstyDownload} target="_blank" rel="noopener">공식 사이트</a>로 안내합니다. 제품 설명은 <a href={SITE.mstyDocs} target="_blank" rel="noopener">공식 문서</a>를 확인하고 씁니다.</p>
+        <h2>문의</h2>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

@@ -41,3 +41,26 @@ test('글 목록과 상세가 빌드된다', () => {
   assert.match(read('news/index.html'), /href="\/news\/site-renewal\/"/);
   assert.match(read('index.html'), /href="\/news\/site-renewal\/"/);
 });
+
+test('다운로드 페이지는 공식 사이트로만 보낸다', () => {
+  const html = read('download/index.html');
+  assert.match(html, /href="https:\/\/msty\.ai\/products\/studio\/"/);
+  assert.doesNotMatch(html, /\.(exe|dmg|AppImage|deb)"/);
+});
+
+test('책·소개·404 페이지가 있다', () => {
+  assert.match(read('book/index.html'), /5,000원/);
+  assert.match(read('book/index.html'), /2024-12-06/);
+  assert.match(read('about/index.html'), /제휴 관계가 아닙니다/);
+  assert.ok(existsSync(join(DIST, '404.html')));
+});
+
+test('외부 링크는 새 탭과 noopener로 연다', () => {
+  for (const f of htmlFiles()) {
+    const html = readFileSync(f, 'utf8');
+    for (const [tag] of html.matchAll(/<a\b[^>]*href="https?:\/\/(?!msty\.kr)[^"]*"[^>]*>/g)) {
+      assert.match(tag, /target="_blank"/, `${f}: ${tag}`);
+      assert.match(tag, /rel="noopener"/, `${f}: ${tag}`);
+    }
+  }
+});

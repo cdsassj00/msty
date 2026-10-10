@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+---
+<Base title="책" description="「보안걱정없이 LLM과 AI를 사용할 수 있는 가장 쉬운 방법」 소개와 개정판 안내입니다.">
+  <section class="section">
+    <div class="wrap narrow">
+      <p class="overline-label">책</p>
+      <h1 class="h-judge">보안걱정없이 LLM과 AI를 사용할 수 있는 가장 쉬운 방법</h1>
+      <p class="meta">신성진·김태유 지음 · {SITE.operator} · 발행 2024-12-06 · 5,000원</p>
+      <p class="lead" style="margin-top:20px">Msty를 설치해 로컬 모델을 쓰기까지의 과정을 담은 한국어 사용자 가이드입니다.</p>
+      <div class="prose">
+        <h2>개정판을 준비하고 있습니다</h2>
+        <p>이 책은 2024년 12월의 Msty를 기준으로 썼습니다. 그 뒤 제품이 Studio, Go, Nexus, Stack으로 나뉘어 화면과 메뉴가 달라졌습니다. 지금 기준의 설명은 <a href="/guide/">Msty 가이드</a>에 올리고 있으며, 이 글들을 묶어 새 책으로 냅니다.</p>
+        <h2>문의</h2>
+        <p><a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+      </div>
+    </div>
+  </section>
+</Base>

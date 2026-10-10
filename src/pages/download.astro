@@ -1,0 +1,28 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE } from '../data/site';
+const platforms = [
+  { os: 'Windows', req: 'Windows 10·11 (64비트)', guide: '/guide/install-windows/' },
+  { os: 'macOS', req: 'macOS 11 이상, Apple Silicon 또는 Intel', guide: '/guide/install-mac/' },
+  { os: 'Linux', req: '64비트, AppImage 또는 .deb 패키지', guide: '/guide/what-is-msty/' },
+];
+---
+<Base title="Msty 다운로드" description="Msty Studio를 받는 곳과 운영체제별 설치 안내입니다.">
+  <section class="section">
+    <div class="wrap narrow">
+      <h1 class="h-judge">Msty 다운로드</h1>
+      <p class="lead">설치 파일은 Msty 공식 사이트에서 받습니다. 이 사이트는 파일을 따로 보관하지 않습니다.</p>
+      <p style="margin:28px 0"><a class="btn-pill" href={SITE.mstyDownload} target="_blank" rel="noopener">Msty 공식 사이트에서 받기</a></p>
+      <div class="grid">
+        {platforms.map((p) => (
+          <a class="panel card" href={p.guide}>
+            <h3>{p.os}</h3>
+            <p>{p.req}</p>
+            <p class="meta" style="margin-top:12px">설치 가이드 보기</p>
+          </a>
+        ))}
+      </div>
+      <p class="meta" style="margin-top:20px">지원 환경은 2026-10-10에 msty.ai에서 확인했습니다.</p>
+    </div>
+  </section>
+</Base>
