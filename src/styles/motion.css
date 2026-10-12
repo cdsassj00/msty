@@ -1,0 +1,126 @@
+/* 도면 디자인의 움직임. heronaiapp.com을 직접 열어 측정한 연출(훑는 선, 맥박 점, 마우스 좌표, 순환 강조,
+   흐르는 점선, 그려지는 밑줄)을 이 사이트에 맞게 다시 만든 것이다. 모션 줄이기 설정에서는 모두 끈다. */
+
+/* ── 시작 화면: 주황 선이 훑고 지나가며 퍼센트가 오른다 ── */
+.intro { position: fixed; inset: 0; z-index: 100; background: var(--paper); display: flex; align-items: flex-end; justify-content: space-between; padding: 28px; font-family: var(--mono); font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink); transition: opacity .45s ease, visibility .45s; }
+.intro.done { opacity: 0; visibility: hidden; pointer-events: none; }
+.intro-scan { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--orange); transform: translateY(0); animation: intro-scan 1.25s cubic-bezier(.6,0,.2,1) forwards; }
+.intro-scan b { position: absolute; left: 28px; top: -16px; color: var(--orange-ink); font-weight: 600; }
+@keyframes intro-scan { to { transform: translateY(100vh); } }
+.intro h2 { margin: 0; font-family: "Pretendard Variable", Pretendard, sans-serif; font-size: clamp(22px, 3vw, 34px); font-weight: 800; letter-spacing: -.03em; line-height: 1.05; text-transform: none; color: var(--ink); }
+.intro dl { margin: 0; display: grid; grid-template-columns: auto auto; gap: 3px 14px; color: var(--mut); }
+.intro dt::after { content: " :"; } .intro dd { margin: 0; color: var(--ink); }
+.intro dl > * { opacity: 0; animation: intro-type .01s linear forwards; }
+.intro dl > :nth-child(1), .intro dl > :nth-child(2) { animation-delay: .15s; }
+.intro dl > :nth-child(3), .intro dl > :nth-child(4) { animation-delay: .4s; }
+.intro dl > :nth-child(5), .intro dl > :nth-child(6) { animation-delay: .65s; }
+.intro dl > :nth-child(7), .intro dl > :nth-child(8) { animation-delay: .9s; }
+@keyframes intro-type { to { opacity: 1; } }
+
+/* ── 도판: 위에서 아래로 드러나고, 주황 선이 따라 내려온다 ── */
+.js .plate.wipe img { clip-path: inset(0 0 100% 0); }
+.js .plate.wipe.show img { clip-path: inset(0 0 0 0); transition: clip-path 1.5s cubic-bezier(.6,0,.2,1); }
+.plate .scan { position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--orange); z-index: 2; opacity: 0; pointer-events: none; }
+.js .plate.wipe.show .scan { animation: plate-scan 1.5s cubic-bezier(.6,0,.2,1) forwards; }
+@keyframes plate-scan { 0% { top: 0; opacity: 1; } 96% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+
+/* 가운데 점선 보조선이 흐른다 */
+.plate::before { border: 0; height: 1px; background: repeating-linear-gradient(90deg, var(--rule) 0 5px, transparent 5px 10px); background-size: 20px 1px; animation: dash-x 1.6s linear infinite; }
+.plate::after { border: 0; width: 1px; background: repeating-linear-gradient(0deg, var(--rule) 0 5px, transparent 5px 10px); background-size: 1px 20px; animation: dash-y 1.6s linear infinite; }
+@keyframes dash-x { to { background-position: 20px 0; } }
+@keyframes dash-y { to { background-position: 0 20px; } }
+
+/* 마우스를 따라오는 십자선과 좌표 */
+.plate .xh, .plate .xv { position: absolute; z-index: 2; pointer-events: none; opacity: 0; transition: opacity .2s; background: var(--orange); }
+.plate .xh { left: 0; right: 0; height: 1px; top: 0; }
+.plate .xv { top: 0; bottom: 0; width: 1px; left: 0; }
+.plate .xy { position: absolute; right: 12px; top: 10px; z-index: 2; font-family: var(--mono); font-size: 9.5px; letter-spacing: .08em; color: var(--orange-ink); opacity: 0; transition: opacity .2s; pointer-events: none; white-space: nowrap; }
+.plate.live .xh, .plate.live .xv, .plate.live .xy { opacity: 1; }
+.plate.live::before, .plate.live::after { opacity: .35; }
+.plate { cursor: crosshair; }
+
+/* 그림 위의 주황 표식: 톡 나타난 뒤 맥박처럼 뛴다. 올리면 설명이 나온다 */
+.pt { position: absolute; left: var(--x); top: var(--y); z-index: 3; width: 10px; height: 10px; margin: -5px 0 0 -5px; background: var(--orange); opacity: 0; transform: scale(.4); }
+.js .plate.show .pt, .no-js .pt { animation: pt-in .5s cubic-bezier(.22,1,.36,1) forwards, pt-beat 1.5s ease-in-out infinite; animation-delay: calc(1.3s + var(--i, 0) * .22s), calc(1.9s + var(--i, 0) * .22s); }
+.pt::before { content: ""; position: absolute; inset: -7px; border: 1px solid var(--orange); opacity: 0; animation: pt-ring 1.5s ease-out infinite; animation-delay: calc(1.9s + var(--i, 0) * .22s); }
+.pt::after { content: attr(data-label); position: absolute; left: 16px; top: -7px; padding: 5px 9px; background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 10px; letter-spacing: .06em; white-space: nowrap; opacity: 0; transform: translateX(-6px); transition: opacity .2s, transform .2s; pointer-events: none; }
+.pt.left::after { left: auto; right: 16px; transform: translateX(6px); }
+.pt:hover::after { opacity: 1; transform: none; }
+.pt:hover { animation-play-state: paused; }
+@keyframes pt-in { 0% { opacity: 0; transform: scale(.4); } 60% { opacity: 1; transform: scale(1.25); } 100% { opacity: 1; transform: scale(1); } }
+@keyframes pt-beat { 0%, 100% { transform: scale(.9); } 50% { transform: scale(1.1); } }
+@keyframes pt-ring { 0% { opacity: .9; transform: scale(.5); } 100% { opacity: 0; transform: scale(1.6); } }
+
+/* ── 줄 목록: 한 줄씩 차례로 켜진다. 기호가 돌다가 체크로 바뀐다 ── */
+.rows > li, .rows > a { position: relative; transition: background .35s; }
+.rows > li::before, .rows > a::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 0; background: var(--orange); transition: width .35s cubic-bezier(.22,1,.36,1); }
+.rows > .on::before, .rows > a:hover::before { width: 3px; }
+.rows > .on { background: var(--surf); }
+.rows > .on .rn { color: var(--orange-ink); }
+.rows .ri { position: relative; overflow: hidden; }
+.rows .ri .icon { transition: transform .4s cubic-bezier(.22,1,.36,1), opacity .25s; }
+.rows > li .ri::after { content: "-"; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 15px; color: var(--orange-ink); opacity: 0; }
+.rows > li.on .ri .icon { opacity: 0; transform: scale(.6); }
+.rows > li.on .ri::after { opacity: 1; animation: ascii-spin .5s steps(1) 3, ascii-check .01s linear 1.5s forwards; }
+@keyframes ascii-spin { 0% { content: "-"; } 25% { content: "\\"; } 50% { content: "|"; } 75% { content: "/"; } }
+@keyframes ascii-check { to { content: "✓"; font-size: 17px; } }
+
+/* ── 밑줄이 그려진다 ── */
+mark { box-shadow: none; background: linear-gradient(var(--orange), var(--orange)) left bottom / 100% 3px no-repeat; padding-bottom: 3px; }
+.js [data-reveal] mark { background-size: 0 3px; transition: background-size .9s cubic-bezier(.6,0,.2,1) .35s; }
+.js [data-reveal].show mark { background-size: 100% 3px; }
+
+/* 구역 라벨의 주황 점이 깜빡인다 */
+.eyebrow::before { animation: blink 2.4s steps(1) infinite; }
+@keyframes blink { 0%, 62% { opacity: 1; } 63%, 78% { opacity: .15; } 79%, 100% { opacity: 1; } }
+
+/* ── 마우스를 올렸을 때 ───────────────────────────────── */
+/* 버튼: 왼쪽에서 색이 차오르고 화살표가 밀려 나갔다가 다시 들어온다 */
+.btn-pill, .btn-ghost { background-image: linear-gradient(var(--orange-ink), var(--orange-ink)); background-repeat: no-repeat; background-size: 0 100%; transition: background-size .35s cubic-bezier(.6,0,.2,1), color .2s, border-color .2s; overflow: hidden; }
+.btn-pill:hover, .btn-ghost:hover { background-size: 100% 100%; background-color: var(--ink); color: #fff; border-color: var(--orange-ink); }
+.btn-ghost:hover { background-color: transparent; }
+.btn-pill::after, .btn-ghost::after { transition: none; }
+.btn-pill:hover::after, .btn-ghost:hover::after { animation: arrow-out .5s cubic-bezier(.6,0,.2,1); }
+@keyframes arrow-out { 0% { text-indent: 0; } 45% { text-indent: 34px; } 46% { text-indent: -34px; } 100% { text-indent: 0; } }
+.site-header .btn-link::after { display: inline-block; transition: transform .25s; }
+.site-header .btn-link:hover::after { transform: translateX(5px); }
+.btn-link, .more-link, .go { background: linear-gradient(currentColor, currentColor) left bottom / 0 1px no-repeat; transition: background-size .3s cubic-bezier(.6,0,.2,1); padding-bottom: 2px; }
+.btn-link:hover, a:hover > .more-link, a:hover > .go, a:hover .more-link, a:hover .go { background-size: 100% 1px; text-decoration: none; }
+
+/* 메뉴 칸: 오른쪽 아래 모서리 표시, 올리면 아래에서 색이 차오른다 */
+.site-nav a { position: relative; background: linear-gradient(var(--ink), var(--ink)) left bottom / 100% 0 no-repeat; transition: background-size .25s cubic-bezier(.6,0,.2,1), color .2s; }
+.site-nav a::after { content: ""; position: absolute; right: 4px; bottom: 4px; width: 5px; height: 5px; border-right: 1px solid currentColor; border-bottom: 1px solid currentColor; opacity: .55; }
+.site-nav a:hover { background-size: 100% 100%; color: var(--paper); }
+
+/* 칸: 올리면 모서리에 주황 표식이 찍히고 아이콘이 뒤집힌다 */
+.cells > *, .post-card, .track { position: relative; transition: background .25s; }
+.cells > a::after, a.post-card::after, a.track::after { content: ""; position: absolute; right: 12px; top: 12px; width: 8px; height: 8px; background: var(--orange); transform: scale(0) rotate(45deg); transition: transform .3s cubic-bezier(.22,1,.36,1); }
+.cells > a:hover::after, a.post-card:hover::after, a.track:hover::after { transform: scale(1) rotate(0); }
+.ico, .illus > span { transition: background .25s, color .25s, border-color .25s, transform .4s cubic-bezier(.22,1,.36,1); }
+a:hover > .illus > span, a:hover .product-head .ico, a.track:hover .illus > span { background: var(--ink); color: var(--paper); border-color: var(--ink) !important; transform: rotate(-8deg); }
+.cells > a h3, a.post-card h3 { transition: transform .3s cubic-bezier(.22,1,.36,1); }
+.cells > a:hover h3, a.post-card:hover h3 { transform: translateX(4px); }
+.toolkit a { transition: background .2s, color .2s, border-color .2s; }
+
+/* 숫자 칸, 푸터 글자 */
+.stats a { position: relative; overflow: hidden; }
+.stats a::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--orange); transform: scaleX(0); transform-origin: left; transition: transform .4s cubic-bezier(.6,0,.2,1); }
+.stats a:hover::after { transform: scaleX(1); }
+.wordmark { transition: -webkit-text-stroke-color .4s, color .6s; }
+.site-footer:hover .wordmark { color: var(--ink); }
+.faq summary::after { transition: transform .3s cubic-bezier(.22,1,.36,1); }
+.side li a, .toc li a { transition: background .2s, color .2s, border-color .2s, padding-left .2s; }
+.toc li a:hover { padding-left: 20px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .intro { display: none; }
+  .js .plate.wipe img { clip-path: none; }
+  .plate::before, .plate::after, .eyebrow::before, .pt, .pt::before, .rows > li.on .ri::after, .btn-pill:hover::after, .btn-ghost:hover::after { animation: none !important; }
+  .pt { opacity: 1; transform: none; }
+  .js [data-reveal] mark { background-size: 100% 3px; transition: none; }
+  .plate .xh, .plate .xv, .plate .xy { display: none; }
+}
+@media (hover: none) { .plate .xh, .plate .xv, .plate .xy { display: none; } }
+
+/* hidden 속성이 있으면 시작 화면은 아예 없다 (다시 방문했을 때 화면을 가리지 않도록) */
+.intro[hidden] { display: none; }

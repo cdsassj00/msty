@@ -216,3 +216,60 @@ test.describe('휴대폰 화면', () => {
     await expect(side.locator('a[aria-current="page"]')).toBeVisible();
   });
 });
+
+test.describe('도면 디자인과 움직임', () => {
+  test('그림의 바탕색이 화면 바탕색과 같다', async ({ page }) => {
+    await page.goto('/');
+    const result = await page.evaluate(async () => {
+      const bg = getComputedStyle(document.body).backgroundColor.match(/\d+/g).slice(0, 3).map(Number);
+      const out = [];
+      for (const img of document.querySelectorAll('.plate img')) {
+        img.loading = 'eager';
+        await img.decode();
+        const c = document.createElement('canvas'); c.width = img.naturalWidth; c.height = img.naturalHeight;
+        const ctx = c.getContext('2d'); ctx.drawImage(img, 0, 0);
+        for (const [x, y] of [[3, 3], [c.width - 4, 3], [3, c.height - 4], [c.width - 4, c.height - 4]]) {
+          const px = [...ctx.getImageData(x, y, 1, 1).data].slice(0, 3);
+          out.push({ src: img.getAttribute('src'), diff: Math.max(...px.map((v, i) => Math.abs(v - bg[i]))) });
+        }
+      }
+      return out;
+    });
+    expect(result.length).toBe(16);
+    for (const r of result) expect(r.diff, r.src).toBeLessThanOrEqual(1);
+  });
+
+  test('시작 화면은 저절로 걷히고, 다시 들어오면 나오지 않는다', async ({ page }) => {
+    await page.goto('/');
+    const intro = page.locator('#intro');
+    await expect(intro).toBeVisible();
+    await expect(intro).toBeHidden({ timeout: 4000 });
+    await page.reload();
+    await expect(intro).toBeHidden();
+    await page.locator('.hero .btn-ghost').click();
+    await expect(page).toHaveURL(/\/guide\/$/);
+  });
+
+  test('그림 위에서 마우스를 움직이면 좌표가 따라온다', async ({ page }) => {
+    await page.goto('/');
+    await expect(page.locator('#intro')).toBeHidden({ timeout: 4000 });
+    const plate = page.locator('.hero .plate');
+    const box = await plate.boundingBox();
+    await page.mouse.move(box.x + 200, box.y + 120);
+    await expect(plate).toHaveClass(/live/);
+    await expect(plate.locator('.xy')).toHaveText(/X: 0200PX\s+Y: 0120PX/);
+    await page.mouse.move(box.x + box.width + 40, box.y + box.height + 200);
+    await expect(plate).not.toHaveClass(/live/);
+  });
+
+  test('그림은 화면에 들어오면 드러나고 표식 세 개가 찍힌다', async ({ page }) => {
+    await page.goto('/');
+    const plate = page.locator('.hero .plate');
+    await expect(plate).toHaveClass(/show/);
+    await expect(plate.locator('.pt')).toHaveCount(3);
+    await page.waitForTimeout(2600);
+    const clip = await plate.locator('img').evaluate((img) => getComputedStyle(img).clipPath);
+    expect(clip).toMatch(/inset\(0(px)?( 0(px)?){0,3}\)/);
+    expect(await plate.locator('.pt').first().evaluate((el) => Number(getComputedStyle(el).opacity))).toBeGreaterThan(0.9);
+  });
+});

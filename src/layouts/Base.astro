@@ -5,6 +5,8 @@ import '../styles/theme.css';
 import '../styles/sections.css';
 import '../styles/polish.css';
 import '../styles/editorial.css';
+import '../styles/blueprint.css';
+import '../styles/motion.css';
 import { SITE } from '../data/site';
 
 interface Props { title: string; description?: string }
@@ -83,6 +85,49 @@ const beacon = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
         for (const type of ['scroll', 'resize', 'hashchange', 'load']) addEventListener(type, schedule, { passive: true });
         // 탭이 가려져 그리기가 멈춘 경우에 대비해 주기적으로도 확인한다.
         const timer = setInterval(() => { check(); if (pending.length === 0) clearInterval(timer); }, 600);
+      })();
+      // 도판: 화면에 들어오면 위에서 아래로 드러난다. 마우스를 올리면 십자선과 좌표가 따라온다.
+      (() => {
+        const plates = [...document.querySelectorAll('.plate')];
+        for (const plate of plates) {
+          plate.insertAdjacentHTML('beforeend', '<i class="scan"></i><i class="xh"></i><i class="xv"></i><span class="xy"></span>');
+          const xh = plate.querySelector('.xh'), xv = plate.querySelector('.xv'), xy = plate.querySelector('.xy');
+          plate.addEventListener('pointermove', (e) => {
+            if (e.pointerType !== 'mouse') return;
+            const r = plate.getBoundingClientRect(), x = e.clientX - r.left, y = e.clientY - r.top;
+            xh.style.top = y + 'px'; xv.style.left = x + 'px';
+            xy.textContent = 'X: ' + String(Math.round(x)).padStart(4, '0') + 'PX  Y: ' + String(Math.round(y)).padStart(4, '0') + 'PX';
+            plate.classList.add('live');
+          });
+          plate.addEventListener('pointerleave', () => plate.classList.remove('live'));
+        }
+        let pending = plates;
+        const check = () => {
+          pending = pending.filter((el) => {
+            if (el.getBoundingClientRect().top > innerHeight * 0.88) return true;
+            el.classList.add('show');
+            return false;
+          });
+        };
+        check();
+        addEventListener('scroll', check, { passive: true });
+        const timer = setInterval(() => { check(); if (pending.length === 0) clearInterval(timer); }, 600);
+      })();
+      // 줄 목록: 화면에 보이는 동안 한 줄씩 차례로 켠다. 마우스를 올린 동안은 멈춘다.
+      (() => {
+        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        for (const list of document.querySelectorAll('ol.rows')) {
+          const items = [...list.children];
+          let i = -1, paused = false;
+          list.addEventListener('pointerenter', () => { paused = true; });
+          list.addEventListener('pointerleave', () => { paused = false; });
+          setInterval(() => {
+            const r = list.getBoundingClientRect();
+            if (paused || r.bottom < 0 || r.top > innerHeight) return;
+            i = (i + 1) % items.length;
+            items.forEach((el, k) => el.classList.toggle('on', k === i));
+          }, 2600);
+        }
       })();
       // 작은 라벨이 화면에 들어올 때 글자가 섞였다가 맞춰지는 효과. 모션 줄이기 설정이면 건너뛴다.
       (() => {

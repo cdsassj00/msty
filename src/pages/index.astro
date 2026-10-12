@@ -101,47 +101,43 @@ const faqs = [
 ];
 ---
 <Base title={SITE.name}>
+  <div class="intro" id="intro" aria-hidden="true" hidden>
+    <span class="intro-scan"><b id="intro-pct">0%</b></span>
+    <h2>내 PC에서 도는 AI,<br />한국어 가이드</h2>
+    <dl>
+      <dt>Site</dt><dd>MSTY KOREA</dd>
+      <dt>Type</dt><dd>LOCAL-FIRST AI GUIDE</dd>
+      <dt>Covers</dt><dd>MSTY · OLLAMA · RAG</dd>
+      <dt>Status</dt><dd>001 도면을 펼치는 중</dd>
+    </dl>
+  </div>
   <nav class="dots" aria-label="홈 구역">
     {[['top', '처음'], ['why', '로컬 AI'], ['promise', '핵심'], ['products', '제품'], ['features', '기능'], ['start', '시작'], ['learn', '학습'], ['lab', '실습'], ['faq', '질문']].map(([id, name]) => <a href={`#${id}`} data-dot={id}>{name}</a>)}
   </nav>
   <section class="hero" id="top">
-    <div class="hero-glow" aria-hidden="true"></div>
     <div class="wrap">
-     <div class="hero-grid">
-      <div>
-      <p class="eyebrow">MSTY · OLLAMA · RAG · 한국어 가이드</p>
-      <h1>보안 걱정 없이<br /><span class="circled">내 PC에서<svg viewBox="0 0 400 120" preserveAspectRatio="none" aria-hidden="true"><path d="M22 66C18 30 96 10 204 10s182 22 178 56-92 46-190 44S20 100 24 62c2-22 40-38 96-44" /></svg></span> AI 쓰기</h1>
-      <p class="lead">내 문서를 밖으로 보내지 않고 내 PC에서 AI를 돌립니다. Msty의 제품과 기능, Ollama와 로컬 모델, 문서 검색, 폐쇄망 활용까지 한국어로 자세히 설명합니다.</p>
-      <div class="actions">
-        <a class="btn-pill" href="/download/">Msty 다운로드 안내</a>
-        <a class="btn-ghost" href="/guide/">Msty 가이드 읽기</a>
-        <a class="btn-ghost" href="/learn/learning-path/">학습 경로 보기</a>
-      </div>
-      <p class="os-line">지원 환경 <a href="/guide/install-windows/">Windows</a><a href="/guide/install-mac/">macOS</a><a href="/guide/start-linux-web-and-migration/">Linux</a></p>
-      </div>
-      <div class="mock-stage" aria-hidden="true">
-        <div class="mock">
-          <div class="mock-bar"><i></i><i></i><i></i><span>로컬 모델로 대화</span><b>내 PC에서 처리</b></div>
-          <div class="mock-body">
-            <div class="mock-side">
-              <p class="on">새 대화</p><p>계약서 검토</p><p>회의록 정리</p>
-              <small>내 문서</small><p>규정집</p><p>사업 계획서</p>
-              <small>모델</small><p>로컬 모델</p><p>온라인 모델</p>
-            </div>
-            <div class="mock-chat">
-              <p class="bub me">이 계약서에서 해지 조항만 정리해 줘</p>
-              <p class="bub ai"><span>해지와 관련된 조항은 세 곳입니다.</span><span>제12조는 서면 통지 30일 전 해지를,</span><span>제13조는 위반 시 즉시 해지를 정합니다.</span><span class="src">근거: 계약서 4쪽, 5쪽</span></p>
-              <div class="mock-input">질문을 입력하세요</div>
-            </div>
+      <figure class="plate wipe">
+        <figcaption class="fig"><b>FIG. 01</b> — 내 PC 안에서 도는 AI</figcaption>
+        <span class="pt" style="--x:36.5%;--y:52%;--i:0" data-label="본체 — 모델이 여기서 돕니다" aria-hidden="true"></span>
+        <span class="pt left" style="--x:62%;--y:44%;--i:1" data-label="화면 — 질문과 문서, 답" aria-hidden="true"></span>
+        <span class="pt left" style="--x:66%;--y:83%;--i:2" data-label="밖으로 나가는 선이 없습니다" aria-hidden="true"></span>
+        <img src="/img/hero.webp" width="1600" height="895" alt="본체와 모니터를 콘크리트 건물처럼 그린 펜화. 오른쪽 위에 주황색 원이 떠 있다." fetchpriority="high" decoding="async" />
+      </figure>
+      <div class="hero-row">
+        <h1>보안 걱정 없이<br />내 PC에서 AI 쓰기</h1>
+        <div class="hero-side">
+          <p class="eyebrow">MSTY · OLLAMA · RAG · 한국어 가이드</p>
+          <p class="lead">내 문서를 밖으로 보내지 않고 내 PC에서 AI를 돌립니다. Msty의 제품과 기능, Ollama와 로컬 모델, 문서 검색, 폐쇄망 활용까지 한국어로 자세히 설명합니다.</p>
+          <div class="actions">
+            <a class="btn-pill" href="/download/">Msty 다운로드 안내</a>
+            <a class="btn-ghost" href="/guide/">가이드 읽기</a>
           </div>
-          <div class="mock-foot"><span class="dot"></span>외부로 보낸 내용 없음 · 모델이 내 PC에서 실행 중</div>
+          <p class="os-line">지원 환경 <a href="/guide/install-windows/">Windows</a><a href="/guide/install-mac/">macOS</a><a href="/guide/start-linux-web-and-migration/">Linux</a></p>
         </div>
-        <p class="mock-note">로컬 모델 대화를 설명하는 예시 그림입니다</p>
       </div>
-     </div>
       <ul class="stats">
         {stats.map((s) => (
-          <li><a href={s.href} class={`c-${s.c}`}><strong class="tabular" data-count={s.n}>{s.n}</strong><span>{s.label}</span></a></li>
+          <li><a href={s.href}><strong class="tabular" data-count={s.n}>{s.n}</strong><span>{s.label}</span></a></li>
         ))}
       </ul>
     </div>
@@ -155,57 +151,71 @@ const faqs = [
 
   <section class="section" id="why">
     <div class="wrap">
-      <div class="split">
-        <div>
-          <p class="eyebrow">로컬 우선 AI</p>
-          <h2 class="h-judge" data-reveal>모델을 <mark>내 컴퓨터에</mark> 받아서 씁니다</h2>
-        </div>
-        <div data-reveal>
-          <p class="lead">AI 모델을 회사 밖 서버가 아니라 내 PC에서 실행하는 방식입니다. 온라인 서비스보다 답의 수준은 낮을 수 있지만, 자료를 밖으로 보내지 않아도 됩니다.</p>
-          <ul class="tags"><li>사내 문서</li><li>개인정보</li><li>폐쇄망</li><li>반복 업무</li></ul>
+      <div class="duo">
+        <figure class="plate zoom wipe">
+          <figcaption class="fig"><b>FIG. 02</b> — 자료는 안에 둔다</figcaption>
+          <img src="/img/vault.webp" width="1100" height="1375" alt="문서 더미와 서류함이 안쪽에 놓인 콘크리트 아치와 계단을 그린 펜화. 뒤로 주황색 원이 걸려 있다." loading="lazy" decoding="async" />
+        </figure>
+        <div class="copy">
+          <div class="pad">
+            <p class="eyebrow">로컬 우선 AI</p>
+            <h2 class="h-judge" data-reveal>모델을 <mark>내 컴퓨터에</mark> 받아서 씁니다</h2>
+            <p class="lead" data-reveal>AI 모델을 회사 밖 서버가 아니라 내 PC에서 실행하는 방식입니다. 온라인 서비스보다 답의 수준은 낮을 수 있지만, 자료를 밖으로 보내지 않아도 됩니다.</p>
+            <ul class="tags" style="margin-top:20px"><li>사내 문서</li><li>개인정보</li><li>폐쇄망</li><li>반복 업무</li></ul>
+            <p class="more"><a class="btn-link" href="/learn/why-run-ai-locally/">로컬에서 돌리는 이유와 한계</a><a class="btn-link" href="/learn/local-or-online-per-task/">작업별로 고르기</a></p>
+          </div>
+          <ol class="rows">
+            {reasons.map((r, i) => (
+              <li><span class="rn">0{i + 1}</span><div class="rb"><h3>{r.title}</h3><p>{r.body}</p></div><span class="ri"><Icon name={r.icon} size={20} /></span></li>
+            ))}
+          </ol>
         </div>
       </div>
-      <div class="grid three" data-stagger>
-        {reasons.map((r, i) => (
-          <div class="panel card reason"><span class="big-n tabular">0{i + 1}</span><h3>{r.title}</h3><p>{r.body}</p></div>
-        ))}
-      </div>
-      <p class="more"><a class="btn-link" href="/learn/why-run-ai-locally/">로컬에서 돌리는 이유와 한계</a><a class="btn-link" href="/learn/local-or-online-per-task/">작업별로 로컬과 온라인 고르기</a></p>
     </div>
   </section>
 
   <section class="statement" id="promise">
     <canvas class="sphere" aria-hidden="true"></canvas>
     <div class="wrap">
+      <span class="side-l">보안이 걱정이라면</span><span class="side-r">밖으로 보내지 않으면 됩니다</span>
       <p class="eyebrow">핵심</p>
-      <h2 data-reveal>자료는 내 PC<br />밖으로 나가지<br />않습니다.</h2>
+      <h2 data-reveal>자료는 내 PC 밖으로<br />나가지 않습니다</h2>
       <p class="lead" data-reveal>로컬 모델과의 대화는 내 컴퓨터 안에서 처리됩니다. 온라인 모델을 연결한 대화만 그 업체로 전송됩니다.</p>
     </div>
   </section>
 
-  <section class="section dark" id="products">
+  <section class="section" id="products">
     <div class="wrap">
-      <p class="eyebrow">Msty 제품</p>
-      <h2 class="h-judge" data-reveal>네 가지 제품이 하나로 이어집니다</h2>
-      <p class="lead" data-reveal>Msty는 미국에서 만든 로컬 우선 AI 제품군입니다. 필요한 제품 하나로 시작할 수 있고, 모델·에이전트·지식·팀 관리로 넓혀 갈 수 있습니다.</p>
-      <div class="diagram" data-reveal aria-hidden="true">
-        <span class="node">질문과 문서</span><span class="wire"><i></i></span>
-        <span class="node fill">내 PC의 모델</span><span class="wire"><i></i></span>
-        <span class="node">근거가 달린 답</span>
-        <span class="note">외부 서버로 나가지 않음</span>
+      <div class="duo flip">
+        <figure class="plate zoom wipe">
+          <figcaption class="fig"><b>FIG. 03</b> — 네 동이 이어진 한 건물</figcaption>
+          <img src="/img/blocks.webp" width="1600" height="1075" alt="높이가 다른 콘크리트 건물 네 동이 다리로 이어진 모습을 그린 펜화. 가장 높은 동 뒤로 주황색 원이 떠 있다." loading="lazy" decoding="async" />
+        </figure>
+        <div class="copy">
+          <div class="pad">
+            <p class="eyebrow">Msty 제품</p>
+            <h2 class="h-judge" data-reveal>네 가지 제품이 하나로 이어집니다</h2>
+            <p class="lead" data-reveal>Msty는 미국에서 만든 로컬 우선 AI 제품군입니다. 필요한 제품 하나로 시작할 수 있고, 모델·에이전트·지식·팀 관리로 넓혀 갈 수 있습니다.</p>
+            <div class="diagram" data-reveal aria-hidden="true">
+              <span class="node">질문과 문서</span><span class="wire"><i></i></span>
+              <span class="node fill">내 PC의 모델</span><span class="wire"><i></i></span>
+              <span class="node">근거가 달린 답</span>
+            </div>
+            <p class="more"><a class="btn-link" href="/guide/platform-overview/">네 제품이 이어지는 방식</a><a class="btn-link" href="/guide/pricing/">요금제</a><a class="btn-link" href="/guide/security-governance/">보안과 통제</a><a class="btn-link" href="/guide/solutions-by-industry/">분야별 활용</a></p>
+          </div>
+        </div>
       </div>
-      <div class="grid two" data-stagger>
-        {products.map((p) => (
-          <a class={`panel card product c-${p.c}`} href={p.href}>
-            <div class="product-head"><span class="ico"><Icon name={p.icon} size={24} /></span><span class="badge">{p.status}</span></div>
+      <div class="cells" style="margin-top:88px" data-stagger>
+        {products.map((p, i) => (
+          <a class="panel card product" href={p.href}>
+            <div class="product-head"><span class="ico"><Icon name={p.icon} size={18} /></span><span class="badge">0{i + 1} · {p.status}</span></div>
             <h3>Msty {p.name}</h3>
             <p class="role">{p.role}</p>
             <ul>{p.points.map((x) => <li>{x}</li>)}</ul>
-            <span class="go">{p.name} 자세히 보기{guideCount[p.name] ? ` · 가이드 ${guideCount[p.name]}편` : ""} →</span>
+            <span class="go">{p.name} 자세히 보기{guideCount[p.name] ? ` · 가이드 ${guideCount[p.name]}편` : ''} →</span>
           </a>
         ))}
       </div>
-      <p class="more"><a class="btn-link" href="/guide/platform-overview/">네 제품이 이어지는 방식</a><a class="btn-link" href="/guide/pricing/">요금제 자세히 보기</a><a class="btn-link" href="/guide/security-governance/">보안과 통제</a><a class="btn-link" href="/guide/solutions-by-industry/">분야별 활용</a></p>
     </div>
   </section>
 
@@ -214,7 +224,8 @@ const faqs = [
       <p class="eyebrow">Msty Studio</p>
       <h2 class="h-judge" data-reveal>Studio로 <mark>할 수 있는 일</mark></h2>
       <p class="lead" data-reveal>Studio는 가장 먼저 설치하는 제품입니다. 기능마다 사용법을 가이드에 따로 정리했습니다.</p>
-      <div class="bento" data-stagger>
+      <p class="more" style="margin-top:0"><a class="btn-pill" href="/guide/">기능별 가이드 {guides.length}편 보기</a></p>
+      <div class="cells bento" data-stagger>
         {features.map((f) => (
           <a class={`panel card feature c-${f.c} ${f.wide ? 'wide' : ''}`} href={f.href}>
             <div class={`illus ${f.pat}`}><span><Icon name={f.icon} size={28} /></span></div>
@@ -222,7 +233,7 @@ const faqs = [
           </a>
         ))}
       </div>
-      <p class="more"><a class="btn-pill" href="/guide/">기능별 가이드 {guides.length}편 보기</a></p>
+
     </div>
   </section>
 
@@ -230,13 +241,13 @@ const faqs = [
     <div class="wrap">
       <p class="eyebrow">시작하기</p>
       <h2 class="h-judge" data-reveal>세 단계로 시작합니다</h2>
-      <ol class="steps" data-stagger>
+      <ol class="steps cells" data-stagger>
         {steps.map((s) => (
           <li class="panel card">
             <span class="big-n tabular">0{s.n}</span>
             <h3>{s.title}</h3>
             <p>{s.body}</p>
-            <a class="btn-link" href={s.href}>{s.cta} →</a>
+            <a class="btn-link" href={s.href}>{s.cta}</a>
           </li>
         ))}
       </ol>
@@ -245,18 +256,23 @@ const faqs = [
 
   <section class="section" id="learn">
     <div class="wrap">
-      <p class="eyebrow">로컬 AI 학습</p>
-      <h2 class="h-judge" data-reveal>순서대로 읽는 <mark>다섯 시리즈</mark></h2>
-      <p class="lead" data-reveal>강의에서 다룬 내용을 글로 옮겼습니다. 기초에서 시작해 직접 만들어 보는 데까지 이어집니다.</p>
-      <div class="grid three" data-stagger>
-        {series.map((s, i) => (
-          <a class={`panel card series c-${s.c}`} href={s.href}>
-            <div class={`illus ${['', 'stripe', 'ring'][i % 3]}`}><span><Icon name={s.icon} size={28} /></span></div>
-            <p class="badge" style="margin-bottom:10px">{s.count}편</p>
-            <h3><span class="num tabular">{i + 1}</span>{s.name}</h3>
-            <p>{s.body}</p>
-          </a>
-        ))}
+      <div class="duo">
+        <figure class="plate zoom wipe">
+          <figcaption class="fig"><b>FIG. 04</b> — 층마다 다른 주제</figcaption>
+          <img src="/img/library.webp" width="1600" height="1075" alt="세 층에 걸쳐 책장과 계단, 책상이 놓인 도서관 단면을 그린 펜화. 아래층 바닥에 주황색 원이 놓여 있다." loading="lazy" decoding="async" />
+        </figure>
+        <div class="copy">
+          <div class="pad">
+            <p class="eyebrow">로컬 AI 학습</p>
+            <h2 class="h-judge" data-reveal>순서대로 읽는 <mark>다섯 시리즈</mark></h2>
+            <p class="lead" data-reveal>강의에서 다룬 내용을 글로 옮겼습니다. 기초에서 시작해 직접 만들어 보는 데까지 이어집니다.</p>
+          </div>
+          <div class="rows">
+            {series.map((s, i) => (
+              <a href={s.href}><span class="rn">0{i + 1}</span><div class="rb"><h3>{s.name}<span class="cnt">{s.count}편</span></h3><p>{s.body}</p></div><span class="ri"><Icon name={s.icon} size={20} /></span></a>
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -266,12 +282,13 @@ const faqs = [
       <p class="eyebrow">실습</p>
       <h2 class="h-judge" data-reveal>설치 없이 브라우저에서 먼저 해 봅니다</h2>
       <p class="lead" data-reveal>모델을 브라우저로 받아 내 기기에서 돌리는 데모 {demos.length}개가 있습니다. 로컬 AI가 어떤 것인지 가장 빨리 확인하는 방법입니다.</p>
-      <div class="grid four" data-stagger>
+      <p class="more" style="margin-top:0"><a class="btn-ghost" href="/lab/">실습 {demos.length}개 모두 보기</a></p>
+      <div class="cells" data-stagger>
         {labPicks.map((d) => (
           <a class="panel card c-green" href={d.url} target="_blank" rel="noopener"><span class="ico"><Icon name="play" /></span><h3>{d.name}</h3><p>{d.desc}</p></a>
         ))}
       </div>
-      <p class="more"><a class="btn-pill" href="/lab/">실습 {demos.length}개 모두 보기</a></p>
+
     </div>
   </section>
 
@@ -297,7 +314,7 @@ const faqs = [
           <details>
             <summary>{f.q}</summary>
             <p>{f.a}</p>
-            <p><a class="btn-link" href={f.href}>{f.cta} →</a></p>
+            <p><a class="btn-link" href={f.href}>{f.cta}</a></p>
           </details>
         ))}
       </div>
@@ -316,8 +333,8 @@ const faqs = [
 
   <section class="cta-band">
     <div class="wrap">
-      <h2>내 PC에서<br />시작하세요.</h2>
-      <div class="actions"><a class="btn-pill light" href="/download/">Msty 다운로드 안내 →</a><a class="btn-ghost on-dark" href="/guide/first-run-and-models/">첫 실행 가이드</a></div>
+      <h2>내 PC에서 시작하세요</h2>
+      <div class="actions"><a class="btn-pill light" href="/download/">Msty 다운로드 안내</a><a class="btn-ghost on-dark" href="/guide/first-run-and-models/">첫 실행 가이드</a></div>
       <dl class="cta-meta">
         <div><dt>요금</dt><dd>Studio 무료로 시작<small>유료 요금제는 선택</small></dd></div>
         <div><dt>지원 환경</dt><dd>Windows · macOS · Linux</dd></div>
@@ -328,6 +345,22 @@ const faqs = [
 </Base>
 
 <script is:inline>
+  // 시작 화면: 방문마다 한 번, 주황 선이 훑고 지나간 뒤 사라진다. 모션 줄이기 설정이면 건너뛴다.
+  (() => {
+    const el = document.getElementById('intro');
+    let seen = false;
+    try { seen = sessionStorage.getItem('intro') === '1'; sessionStorage.setItem('intro', '1'); } catch {}
+    if (!el || seen || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    el.hidden = false;
+    const pct = document.getElementById('intro-pct'), t0 = performance.now(), dur = 1250;
+    const tick = (t) => {
+      const k = Math.min(1, (t - t0) / dur);
+      pct.textContent = Math.round(k * 100) + '%';
+      if (k < 1) requestAnimationFrame(tick); else el.classList.add('done');
+    };
+    requestAnimationFrame(tick);
+    setTimeout(() => el.classList.add('done'), 2200); // 그리기가 멈춘 탭에서도 반드시 걷힌다
+  })();
   // 구역 점 메뉴: 지금 보이는 구역을 표시하고, 검은 구역 위에서는 점 색을 바꾼다.
   (() => {
     const nav = document.querySelector('.dots');
@@ -353,6 +386,7 @@ const faqs = [
     const N = 900, pts = [];
     for (let i = 0; i < N; i++) { const y = 1 - (i / (N - 1)) * 2, r = Math.sqrt(1 - y * y), t = i * 2.399963; pts.push([Math.cos(t) * r, y, Math.sin(t) * r]); }
     let w = 0, h = 0, angle = 0, visible = false, raf = 0;
+    const ink = getComputedStyle(cv).color; // 점의 색은 CSS에서 정한다
     const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
     const size = () => { const b = cv.getBoundingClientRect(), d = Math.min(devicePixelRatio || 1, 2); w = b.width; h = b.height; cv.width = w * d; cv.height = h * d; ctx.setTransform(d, 0, 0, d, 0, 0); };
     const draw = () => {
@@ -362,7 +396,7 @@ const faqs = [
         const x1 = x * ca + z * sa, z1 = z * ca - x * sa, y1 = y * cb - z1 * sb, z2 = z1 * cb + y * sb;
         const k = (z2 + 1.6) / 2.6;
         ctx.globalAlpha = 0.18 + k * 0.82;
-        ctx.fillStyle = '#fff';
+        ctx.fillStyle = ink;
         ctx.beginPath(); ctx.arc(cx + x1 * R, cy + y1 * R, 0.6 + k * 1.5, 0, 6.2832); ctx.fill();
       }
     };
