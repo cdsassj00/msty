@@ -346,3 +346,6 @@ a.post-card:hover { background: var(--surf); }
 }
 
 .track .illus, .track .illus.stripe, .track .illus.ring, .cells .illus { height: auto; margin: 0; }
+
+/* 메뉴 칸은 글자 수와 상관없이 같은 폭으로 나눈다. 좁은 화면에서는 최소 폭을 지키고 가로로 민다. */
+.site-nav a { flex: 1 1 0; min-width: 88px; justify-content: center; text-align: center; padding: 0 8px; }

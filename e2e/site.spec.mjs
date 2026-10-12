@@ -273,3 +273,10 @@ test.describe('도면 디자인과 움직임', () => {
     expect(await plate.locator('.pt').first().evaluate((el) => Number(getComputedStyle(el).opacity))).toBeGreaterThan(0.9);
   });
 });
+
+test('상단 메뉴 칸의 가로 크기가 모두 같다', async ({ page }) => {
+  await page.goto('/guide/');
+  const widths = await page.locator('.site-nav a').evaluateAll((els) => els.map((el) => Math.round(el.getBoundingClientRect().width)));
+  expect(widths.length).toBe(7);
+  expect(Math.max(...widths) - Math.min(...widths)).toBeLessThanOrEqual(1);
+});
