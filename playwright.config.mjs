@@ -6,7 +6,9 @@ export default defineConfig({
   testDir: './e2e',
   timeout: 30_000,
   fullyParallel: true,
+  // 원격 주소는 한꺼번에 요청하면 시간 초과가 나므로 동시 실행을 줄인다.
+  workers: process.env.BASE_URL ? 2 : undefined,
   reporter: [['list']],
   use: { baseURL: process.env.BASE_URL ?? 'http://localhost:4321', channel: 'chrome', viewport: { width: 1360, height: 880 } },
-  webServer: { command: 'npm run preview', url: 'http://localhost:4321', reuseExistingServer: true, timeout: 60_000 },
+  webServer: process.env.BASE_URL ? undefined : { command: 'npm run preview', url: 'http://localhost:4321', reuseExistingServer: true, timeout: 60_000 },
 });
